@@ -44,6 +44,7 @@ const GlobalStyle = createGlobalStyle`
 	
 	main {
 		height: 100%;
+		padding: 0;
 	}
 	
 	#__next {

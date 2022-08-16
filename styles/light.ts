@@ -25,6 +25,7 @@ const theme: DefaultTheme = {
   orange: "#F58C2B",
   yellow: "#F1F52B",
   purple: "#532BF5;",
+  bgInput: "#F3F3F5",
 };
 
 export default theme;

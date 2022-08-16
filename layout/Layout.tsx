@@ -7,7 +7,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <MainContainer>
       <SideBar />
-      {/* <Container>{children}</Container> */}
+      <Container>{children}</Container>
     </MainContainer>
   );
 };
