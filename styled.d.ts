@@ -27,5 +27,6 @@ declare module "styled-components" {
     yellow: string;
     purple: string;
     bgInput: string;
+    mainColor: string;
   }
 }
