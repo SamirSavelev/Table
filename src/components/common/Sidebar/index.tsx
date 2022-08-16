@@ -3,14 +3,67 @@ import Logo from "../../Logo";
 import { SidebarStyled } from "./styles";
 import plus from "../../../assets/plus.svg";
 import Image from "next/image";
-const SideBar = () => {
-  const { Wrapper } = SidebarStyled;
+import MenuItem from "../Menu/components/MenuItem";
+
+import wave from "../../../assets/menu/wave.svg";
+import { menuConfig } from "./config";
+import { FC } from "react";
+
+const { part1, part2, part3 } = menuConfig;
+const { Wrapper, ButtonContainer, Wave } = SidebarStyled;
+
+const SideBar: FC = () => {
+  const add = (e: React.MouseEvent) => {
+    console.log("Добавление");
+  };
+
   return (
     <Wrapper>
-      <Logo margin="0 0 33px 0" />
-      <Button add>
-        <Image src={plus} width="20px" height="20px" alt="Logo" />
-      </Button>
+      <Logo />
+      <ButtonContainer>
+        <Button add onClick={add}>
+          <Image src={plus} width="20px" height="20px" alt="Logo" />
+        </Button>
+      </ButtonContainer>
+      {part1.map((item, index) => {
+        return (
+          <MenuItem
+            key={index}
+            onClick={() => console.log(item.title)}
+            img={item.image}
+          >
+            {item.title}
+          </MenuItem>
+        );
+      })}
+      <Wave>
+        <Image src={wave} alt="" />
+      </Wave>
+      {part2.map((item, index) => {
+        return (
+          <MenuItem
+            key={index}
+            onClick={() => console.log(item.title)}
+            img={item.image}
+          >
+            {item.title}
+          </MenuItem>
+        );
+      })}
+      <Wave>
+        <Image src={wave} alt="" />
+      </Wave>
+      {part3.map((item, index) => {
+        return (
+          <MenuItem
+            key={index}
+            onClick={() => console.log(item.title)}
+            img={item.image}
+          >
+            {item.title}
+          </MenuItem>
+        );
+      })}
     </Wrapper>
   );
 };
