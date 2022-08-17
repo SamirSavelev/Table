@@ -6,7 +6,7 @@ const { Ellipse } = UserComponentsStyles;
 
 const LogOut = () => {
   return (
-    <Ellipse>
+    <Ellipse onClick={() => console.log("Выйти")}>
       <Image src={logout} alt="logout" height={24} width={24} />
     </Ellipse>
   );

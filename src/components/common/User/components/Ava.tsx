@@ -5,8 +5,8 @@ const { Ellipse } = UserComponentsStyles;
 
 const Ava = () => {
   return (
-    <Ellipse>
-      <Text white medium bold>
+    <Ellipse onClick={() => console.log("Аватар")}>
+      <Text white medium extraBold>
         ИИ
       </Text>
     </Ellipse>

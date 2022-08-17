@@ -9,6 +9,7 @@ const Container = styled.button<IButton>`
   justify-content: center;
   display: inline-flex;
   white-space: nowrap;
+
   ${({ add }) =>
     add &&
     css`
@@ -16,6 +17,23 @@ const Container = styled.button<IButton>`
       background-color: ${({ theme }) => theme.grey};
       &:hover {
         background-color: ${({ theme }) => theme.greyHover};
+      }
+    `}
+
+  ${({ back }) =>
+    back &&
+    css`
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      align-items: center;
+      padding: 0;
+      width: max-content;
+      background-color: transparent;
+      color: ${({ theme }) => theme.greyLink};
+      &:hover {
+        color: ${({ theme }) => theme.greyHover};
       }
     `}
 `;

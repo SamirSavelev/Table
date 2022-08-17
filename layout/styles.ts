@@ -12,6 +12,6 @@ export const Container = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 20px 50px 20px 20px;
 `;

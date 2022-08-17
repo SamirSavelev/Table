@@ -8,6 +8,7 @@ declare module "styled-components" {
     white: string;
     primary: string;
     grey: string;
+    grey2: string;
     greyHover: string;
     lightGrey: string;
     lightGrey2: string;
@@ -28,5 +29,9 @@ declare module "styled-components" {
     purple: string;
     bgInput: string;
     mainColor: string;
+    greyLink: string;
+    tooltip: string;
+    tooltipTitle: string;
+    dropdownItem: string;
   }
 }
