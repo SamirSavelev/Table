@@ -1,15 +1,22 @@
 import type { NextPage } from "next";
+import React from "react";
 import { withLayout } from "../layout/Layout";
 import BackHome from "../src/components/BackHome";
 import Header from "../src/components/common/Header";
 import Table from "../src/components/common/Table";
+import { columns, tableData } from "../src/components/common/Table/data";
 
 const Home: NextPage = () => {
   return (
     <>
       <Header />
       <BackHome />
-      <Table title="Все грузы" />
+      <Table
+        header="Все грузы"
+        data={{ data: tableData }}
+        tableData={tableData}
+        columns={columns}
+      />
     </>
   );
 };

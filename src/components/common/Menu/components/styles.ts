@@ -8,6 +8,7 @@ const Item = styled(Button)`
   padding: 15px 0px 15px 20px;
   justify-content: flex-start;
   gap: 20px;
+  width: 100%;
   &:hover {
     background: ${({ theme }) => theme.lightGreyHover};
     border-radius: 10px;

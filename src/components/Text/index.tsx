@@ -11,6 +11,7 @@ interface IText {
   small?: boolean;
   tableHeader?: boolean;
   withTooltip?: boolean;
+  clickable?: boolean;
 }
 
 const Text = styled.div<IText>`
@@ -21,27 +22,26 @@ const Text = styled.div<IText>`
       : props.white
       ? theme.white
       : props.tableHeader
-      ? theme.grey2
+      ? theme.greyHover
       : props.withTooltip
       ? theme.tooltipTitle
       : theme.black};
   font-weight: ${({ ...props }) =>
-    props.logo || props.extraBold
-      ? "700"
-      : props.bold || props.tableHeader
-      ? "600"
-      : "400"};
+    props.logo || props.extraBold ? "700" : props.bold ? "600" : "400"};
   font-size: ${({ ...props }) =>
     props.logo
       ? "30px"
-      : props.tableHeader
-      ? "18px"
       : props.medium
       ? "16px"
       : props.small
       ? "12px"
       : "13px"};
-  margin: ${({ margin = 0 }) => margin};
+  margin: ${({ margin }) => (margin ? margin : 0)};
+  ${({ clickable }) =>
+    clickable &&
+    css`
+      cursor: pointer;
+    `};
 `;
 
 export default Text;

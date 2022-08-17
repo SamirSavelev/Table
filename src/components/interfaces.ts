@@ -21,7 +21,8 @@ export interface IDropdown {
   id: string;
   header: string;
   tooltip: string;
-  menuItems: Array<string>;
+  menuItems?: Array<string>;
+  calendar?: boolean;
 }
 
 export interface IFlex {
@@ -29,6 +30,7 @@ export interface IFlex {
   spaceBetween?: boolean;
   gap?: string;
   alignItems?: string;
+  margin?: string;
 }
 
 export interface IDropdownItem {

@@ -21,7 +21,7 @@ const SideBar: FC = () => {
     <Wrapper>
       <Logo />
       <ButtonContainer>
-        <Button add onClick={add}>
+        <Button add onClick={add} stretch>
           <Image src={plus} width="20px" height="20px" alt="Logo" />
         </Button>
       </ButtonContainer>

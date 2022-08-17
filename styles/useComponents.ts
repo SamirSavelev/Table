@@ -12,6 +12,7 @@ const Row = styled.div<IFlex>`
       : "center"};
   gap: ${({ gap }) => (gap ? gap : 0)};
   align-items: ${({ alignItems }) => (alignItems ? alignItems : "stretch")};
+  margin: ${({ margin }) => (margin ? margin : "0")};
 `;
 
 const Column = styled.div<IFlex>`

@@ -5,4 +5,8 @@ export interface IButton {
   children?: ReactNode;
   add?: boolean;
   back?: boolean;
+  stretch?: boolean;
+  big?: boolean;
+  confirm?: boolean;
+  border?: boolean;
 }
