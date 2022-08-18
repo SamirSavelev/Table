@@ -23,7 +23,7 @@ const Expander = ({ data }) => {
       <Block>
         <Section widht="500px">
           <Column>
-            <RowExpander title="Cтатус груза">ddd</RowExpander>
+            <RowExpander title="Cтатус груза">{data.status}</RowExpander>
             <RowExpander title="Дата поступления груза в порт">
               {data.receipt_date}
             </RowExpander>
