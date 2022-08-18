@@ -1,24 +1,61 @@
 import { Cell, Row } from "react-table";
 import Text from "../../Text";
+import ExpandIcon from "./components/ExpandIcon";
 
 export const tableData = [
   {
+    status: "Новый",
     number: 2887,
-    type: "Контейнер",
     order: 4329,
+    receipt_date: "29.06.2021",
+    type: "Контейнер",
+    type_container: "40' High Cube",
     sender: "ООО “Компания”",
     certificate: "25499-Т",
-    consignment: "440038990",
-    receipt_date: "29.06.2021",
+    consignment: 440038990,
+    manager: {
+      name: "Иванов Иван Иванович",
+      email: "example@mail.ru",
+      phone: "+7(927)777-55-55",
+    },
+    size: {
+      volume: 43.481,
+      height: 29.82,
+      weight: 5.355,
+      length: 12.844,
+      width: 3.62,
+      freight: 5.355,
+    },
+    inventory_items: "Опора промежуточная",
+    location: "3 скл причал",
+    delivery: "Автомобиль",
   },
   {
+    status: "Назначен ответственный менеджер",
     number: 2886,
-    type: "Генеральный груз",
     order: 4329,
+    receipt_date: "29.06.2021",
+    type: "Генеральный груз",
+    type_container: "40' High Cube",
     sender: "ООО “Компания”",
     certificate: "25499-Т",
-    consignment: "440038990",
-    receipt_date: "29.06.2021",
+    consignment: 440038990,
+    manager: {
+      name: "Иванов Иван Иванович",
+      email: "example@mail.ru",
+      phone: "+7(927)777-55-55",
+    },
+    size: {
+      volume: 43.481,
+      height: 29.82,
+      weight: 5.355,
+      length: 12.844,
+      width: 3.62,
+      freight: 5.355,
+    },
+    inventory_items: "Опора промежуточная",
+    location: "3 скл причал",
+    delivery: "car",
   },
   {
     number: 2885,
@@ -28,6 +65,7 @@ export const tableData = [
     certificate: "25499-Т",
     consignment: "440038990",
     receipt_date: "29.06.2021",
+    status: "Расчет стоимости заказа",
   },
   {
     number: 2884,
@@ -37,6 +75,7 @@ export const tableData = [
     certificate: "25499-Т",
     consignment: "440038990",
     receipt_date: "29.06.2021",
+    status: "Рассчитана стоимость заказа",
   },
   {
     number: 2883,
@@ -46,6 +85,7 @@ export const tableData = [
     certificate: "25499-Т",
     consignment: "440038990",
     receipt_date: "29.06.2021",
+    status: "Груз принят в порту отправления",
   },
   {
     number: 2882,
@@ -55,6 +95,7 @@ export const tableData = [
     certificate: "25499-Т",
     consignment: "440038990",
     receipt_date: "29.06.2021",
+    status: "Груз размещен на судне",
   },
   {
     number: 2881,
@@ -64,13 +105,14 @@ export const tableData = [
     certificate: "25499-Т",
     consignment: "440038990",
     receipt_date: "29.06.2021",
+    status: "Новый",
   },
 ];
 export const columns = [
   {
     accessor: "number",
-    minWidth: 132,
-    width: 132,
+    minWidth: 150,
+    width: 150,
     Header: (
       <Text tableHeader clickable>
         Номер груза
@@ -91,8 +133,8 @@ export const columns = [
   },
   {
     accessor: "order",
-    minWidth: 180,
-    width: 180,
+    minWidth: 200,
+    width: 200,
     Header: (
       <Text tableHeader clickable>
         Закрепленный заказ
@@ -113,8 +155,8 @@ export const columns = [
   },
   {
     accessor: "certificate",
-    minWidth: 185,
-    width: 185,
+    minWidth: 200,
+    width: 200,
     Header: (
       <Text tableHeader clickable>
         Номер приемного акта
@@ -124,8 +166,8 @@ export const columns = [
   },
   {
     accessor: "consignment",
-    minWidth: 270,
-    width: 270,
+    minWidth: 300,
+    width: 300,
     Header: (
       <Text tableHeader clickable>
         Номер транспортной/ЖД накладной
@@ -135,8 +177,8 @@ export const columns = [
   },
   {
     accessor: "receipt_date",
-    minWidth: 200,
-    width: 200,
+    minWidth: 230,
+    width: 230,
     Header: (
       <Text tableHeader clickable>
         Дата поступления в порт
@@ -147,9 +189,11 @@ export const columns = [
   {
     Header: () => null,
     id: "expander",
+    minWidth: 50,
+    width: 50,
     Cell: ({ row }: { row: Row }) => (
       <span {...row.getToggleRowExpandedProps()}>
-        {row.isExpanded ? "👇" : "👉"}
+        <ExpandIcon rotate={row.isExpanded} />
       </span>
     ),
   },

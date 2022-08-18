@@ -4,21 +4,19 @@ import { TableInnerHeaderGroup } from "./TableInnerHeaderGroup/TableInnerHeaderG
 type Props = {
   totalColumnsWidth: number;
   headerGroups: [any];
-  grayHeader?: boolean;
 };
 
 export const TableInnerHeader: React.FC<Props> = ({
   totalColumnsWidth,
   headerGroups,
-  grayHeader,
 }) => {
   return (
     <div className="header">
       <div
         style={{
           width: totalColumnsWidth,
-          borderRadius: grayHeader ? 0 : "10px",
-          backgroundColor: grayHeader ? theme.green2 : theme.white,
+          borderRadius: "10px",
+          backgroundColor: theme.white,
         }}
       >
         {headerGroups.map((headerGroup: any, index) => (

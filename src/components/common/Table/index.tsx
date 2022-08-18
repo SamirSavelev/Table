@@ -21,10 +21,9 @@ import {
   _bindScrollCallback,
   _unBindScrollCallback,
 } from "./utils";
-import styled, { useTheme } from "styled-components";
+import { useTheme } from "styled-components";
 import { useSticky } from "react-table-sticky";
-import SectionBox from "./SectionBox";
-import Text from "../../Text";
+
 import { RenderRow } from "./RenderRow";
 import { TableInner } from "./TableInner";
 import { UseComponents } from "../../../../styles/useComponents";
@@ -43,25 +42,11 @@ const Table: React.FC<ITable> = ({
   columns,
   data,
   tableData,
-  bottomContent = null,
   initialState,
-  title,
-  subtitle,
   selectRows, //adds the checkboxes column if true (selectedFlatRows is the array of checked rows (per each column))
   setCheckedRows,
   scrollEnd,
   height,
-  exportStyle = null,
-  extraContent = null,
-  hideExcel = false,
-  footerData = null,
-  modal = false,
-  noHorPadding = false,
-  noPadding = false,
-  grayHeader = false,
-  noExport = false,
-  noHeader = false,
-  plusMunisModal = false,
 }) => {
   const router = useRouter();
   const theme = useTheme();
@@ -145,6 +130,7 @@ const Table: React.FC<ITable> = ({
       setCheckedRows(selectedFlatRows.map((item) => item.original));
   }, [selectedFlatRows.length]);
 
+  const [openRow, setOpenRow] = useState();
   return (
     <>
       <Header>{header}</Header>
@@ -171,33 +157,23 @@ const Table: React.FC<ITable> = ({
       </Row>
       <Container>
         {
-          <Styles
-            noHeader={noHeader}
-            plusMunisModal={plusMunisModal}
-            noHorPadding={noHorPadding}
-            grayHeader={grayHeader}
-            selectedRows={selectRows}
-          >
+          <Styles selectedRows={selectRows}>
             <div {...getTableProps()} className="table sticky">
               <div
                 ref={containerRef}
                 style={{ position: "relative", flex: 1, zIndex: 0 }}
               >
                 <FixedSizeList
-                  height={height || getItemSize(rows.length + 2)}
+                  height={height || getItemSize(rows.length + 4)}
                   itemCount={rows.length}
                   itemSize={ROW_HEIGHT}
                   width="100%"
-                  style={{ borderRadius: grayHeader ? 0 : 10 }}
                   innerElementType={({ children, style, ...rest }: any) => {
                     return (
                       <TableInner
-                        grayHeader={grayHeader}
-                        footerData={footerData}
                         getTableBodyProps={getTableBodyProps}
                         totalColumnsWidth={totalColumnsWidth}
                         headerGroups={headerGroups}
-                        footerGroups={footerGroups}
                         rows={rows}
                         style={style}
                         {...rest}
@@ -209,8 +185,6 @@ const Table: React.FC<ITable> = ({
                 >
                   {({ index, style }) => (
                     <RenderRow
-                      plusMunisModal={plusMunisModal}
-                      grayHeader={grayHeader}
                       data={data}
                       index={index}
                       style={style}
@@ -218,6 +192,8 @@ const Table: React.FC<ITable> = ({
                       rows={rows}
                       visibleColumns={visibleColumns}
                       renderRowSubComponent={renderRowSubComponent}
+                      setOpenRow={setOpenRow}
+                      openRow={openRow}
                     />
                   )}
                 </FixedSizeList>
@@ -225,18 +201,9 @@ const Table: React.FC<ITable> = ({
             </div>
           </Styles>
         }
-        {bottomContent}
       </Container>
     </>
   );
 };
 
 export default Table;
-
-const Buttons = styled.div`
-  display: flex;
-
-  > *:not(:last-child) {
-    margin-right: 16px;
-  }
-`;

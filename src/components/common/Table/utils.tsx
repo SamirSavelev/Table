@@ -3,7 +3,7 @@ import { BsArrowDown, BsArrowUp } from "react-icons/bs";
 import { TableState } from "react-table";
 import styled, { css } from "styled-components";
 
-export const ROW_HEIGHT = 50;
+export const ROW_HEIGHT = 65;
 
 export const _bindScrollCallback = (
   element,
@@ -30,12 +30,7 @@ export const _unBindScrollCallback = (
 
 // styles
 export const Styles = styled.div<{
-  grayHeader?: boolean;
-  noHorPadding?: boolean;
   selectedRows?: boolean;
-  chart?: boolean;
-  noHeader?: boolean;
-  plusMunisModal?: boolean;
 }>`
   width: 100%;
   display: inline-block;
@@ -49,6 +44,11 @@ export const Styles = styled.div<{
     .body {
       position: relative;
       padding-top: 50px;
+      .tr {
+        &:hover {
+          background-color: ${({ theme }) => theme.bgColor} !important;
+        }
+      }
     }
     .td:first-child,
     .th:first-child {
@@ -56,9 +56,6 @@ export const Styles = styled.div<{
       font-weight: 600;
       overflow: hidden;
       white-space: nowrap;
-      padding-left: ${({ noHorPadding }) =>
-        noHorPadding ? "30px !important" : 0};
-
       span {
         display: inline-block;
         position: relative;
@@ -68,50 +65,15 @@ export const Styles = styled.div<{
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      ${(props) =>
-        !props.plusMunisModal &&
-        css`
-          &:hover {
-            overflow: visible;
-            z-index: 9 !important;
-            * {
-              cursor: default;
-              z-index: 10;
-            }
-            span {
-              position: relative;
-              left: 0px;
-              z-index: 11;
-              overflow: visible;
-              text-overflow: initial;
-            }
-          }
-        `}
     }
     .tr {
       min-width: 100%;
       align-items: stretch;
       height: ${() => ROW_HEIGHT}px;
-      font-size: ${({ plusMunisModal }) =>
-        plusMunisModal ? "14px" : "12px"} !important;
-      * {
-        font-size: ${({ plusMunisModal }) =>
-          plusMunisModal ? "14px" : "12px"} !important;
-      }
-      :hover {
-        background-color: blue;
-      }
-
-      :last-child {
-        .td {
-          height: 46px;
-          padding-bottom: 15px !important;
-          border-bottom: 0;
-          overflow: hidden;
-        }
-      }
+      font-size: 13px !important;
+      border-bottom: 1px solid #e9e9e9;
+      font-weight: 400;
     }
-
     .th,
     .td {
       display: flex !important;
@@ -130,7 +92,6 @@ export const Styles = styled.div<{
       }
       .resizer {
         display: inline-block;
-        background: ${({ theme }) => theme.tableBorder};
         width: 2px;
         height: 100%;
         position: absolute;
@@ -138,20 +99,20 @@ export const Styles = styled.div<{
         top: 0;
         transform: translateX(50%);
         z-index: 1;
-        ${"" /* prevents from scrolling while dragging on touch devices */}
-        touch-action:none;
+        touch-action: none;
       }
     }
     .td:last-child {
       padding: ${({ chart }) => (chart ? 0 : "8px")} !important;
-      opacity: 0.7;
-      box-shadow: 0px -5px 15px rgba(255, 255, 255, 0.05) !important;
     }
     .header,
     .footer {
       font-weight: 600;
       z-index: 2;
       background-color: ${({ theme }) => theme.white};
+      &:hover {
+        background-color: ${({ theme }) => theme.white} !important;
+      }
     }
 
     &.sticky {
@@ -170,48 +131,19 @@ export const Styles = styled.div<{
       .header {
         z-index: 4;
         top: 0;
-        background-color: ${({ theme, grayHeader }) =>
-          grayHeader ? theme.grayHover : theme.white};
-        height: ${({ grayHeader }) => (grayHeader ? "50px" : "auto")};
-        box-shadow: ${({ grayHeader }) =>
-          grayHeader ? "none" : "0px 5px 10px rgba(0, 0, 0, 0.05)"} !important;
-        .tr:first-child {
-          .th {
-            height: ${({ selectedRows, grayHeader }) =>
-              selectedRows || grayHeader ? "50px" : "auto"};
-            font-size: 20px;
-          }
-        }
-        ${({ noHeader }) =>
-          noHeader &&
-          css`
-            display: none;
-          `};
+        background-color: ${({ theme }) => theme.white};
+        height: auto;
+        border-bottom: 1px solid #e9e9e9;
       }
-      .footer {
-        z-index: 5;
-        bottom: 0;
-        .tr:first-child {
-          box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.05) !important;
-        }
-      }
-
       [data-sticky-td] {
         background-color: inherit;
         z-index: 3;
         position: sticky;
       }
-
-      ${(props) =>
-        !props.plusMunisModal &&
-        css`
-          [data-sticky-last-left-td] {
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.05);
-          }
-        `}
     }
   }
 `;
+
 export const ValueGeneralCss = css`
   font-weight: 500;
   svg {
@@ -261,7 +193,6 @@ export const AlignedLink = styled.div`
   max-width: 100%;
 `;
 
-// table
 export const CellElement: React.FC<{ item: any }> = ({ item }) => (
   <>
     <span>
