@@ -1,5 +1,8 @@
+import { useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import theme from "../../../../styles/light";
+import { ROW_HEIGHT } from "./utils";
 
 type Props = {
   data: any;
@@ -7,8 +10,6 @@ type Props = {
   style: any;
   prepareRow: any;
   rows: any;
-  grayHeader?: boolean;
-  plusMunisModal?: boolean;
 };
 
 export const RenderRow: React.FC<Props> = ({
@@ -16,25 +17,33 @@ export const RenderRow: React.FC<Props> = ({
   style,
   prepareRow,
   rows,
-  grayHeader,
-  plusMunisModal,
   visibleColumns,
   renderRowSubComponent,
+  openRow,
+  setOpenRow,
 }) => {
+  const [opRow, setOpRow] = useState();
   const row = rows[index];
-
   prepareRow(row);
 
   const { style: rowStyle, ...restRow } = row?.getRowProps({ style });
-  const bgTable = index % 2 ? "#f9f9f9" : theme.white;
-  const bgPlusMinusTable = theme.white;
-  const background = plusMunisModal ? bgPlusMinusTable : bgTable;
+  const top = 16 + ROW_HEIGHT * index;
+
+  const i = row?.index;
+  const isShiftRow = openRow < row.index;
+
+  if (row.isExpanded) {
+    setOpRow(i);
+  }
+
+  const shiftRowsStyles = isShiftRow ? rowStyle.top + 200 : rowStyle.top;
+  const rowStyleOpen = { ...rowStyle, top: shiftRowsStyles };
   return (
     <>
       <div
         {...restRow}
         className="tr"
-        style={{ ...rowStyle, width: "auto", background: background }}
+        style={{ ...rowStyleOpen, width: "auto", background: theme.white }}
       >
         {row.cells.map((cell: any, cellIndex: number) => {
           return (
@@ -47,7 +56,7 @@ export const RenderRow: React.FC<Props> = ({
         })}
       </div>
       {row.isExpanded ? (
-        <StyledTr>
+        <StyledTr top={top}>
           <td colSpan={visibleColumns.length}>
             {renderRowSubComponent({ row })}
           </td>
@@ -57,8 +66,10 @@ export const RenderRow: React.FC<Props> = ({
   );
 };
 
-const StyledTr = styled.tr`
+const StyledTr = styled.tr<{ top?: number }>`
   z-index: 9999999;
+  background-color: red;
+  height: 200px;
   position: relative;
-  top: 0; ;
+  top: ${({ top }) => top && `${top}px`};
 `;
