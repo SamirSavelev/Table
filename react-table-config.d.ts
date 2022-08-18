@@ -16,7 +16,6 @@ declare module "react-table" {
     getToggleRowExpandedProps: () => any;
     isExpanded?: boolean;
   };
-
   export interface HeaderColumn {
     accessor: string | ((originalRow: any) => string);
     Header?: string | ((props: Api) => JSX.Element | string);

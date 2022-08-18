@@ -3,7 +3,14 @@ import styled, { css } from "styled-components";
 
 const Container = styled.button<IButton>`
   width: ${({ stretch }) => (stretch ? "100%" : "max-content")};
-  padding: ${({ big }) => (big ? "24px 22px" : "13px")};
+  padding: ${({ ...props }) =>
+    props.big
+      ? "24px 22px"
+      : props.noPadding
+      ? ""
+      : props.small
+      ? "10px 20px "
+      : "13px"};
   transition: 0.2s ease-out;
   align-items: center;
   justify-content: center;
@@ -55,6 +62,11 @@ const Container = styled.button<IButton>`
       &:hover {
         color: ${({ theme }) => theme.greyHover};
       }
+    `}
+    ${({ redBorder }) =>
+    redBorder &&
+    css`
+      border: 1px solid #fb2c2c;
     `}
 `;
 

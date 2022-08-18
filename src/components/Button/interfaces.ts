@@ -9,4 +9,7 @@ export interface IButton {
   big?: boolean;
   confirm?: boolean;
   border?: boolean;
+  noPadding?: boolean;
+  small?: boolean;
+  redBorder?: boolean;
 }

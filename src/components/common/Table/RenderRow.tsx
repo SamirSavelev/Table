@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
 import theme from "../../../../styles/light";
-import { ROW_HEIGHT } from "./utils";
+import Expander from "./components/Expander";
+import { ROW_HEIGHT, StyledTr } from "./utils";
 
 type Props = {
   data: any;
@@ -10,6 +11,9 @@ type Props = {
   style: any;
   prepareRow: any;
   rows: any;
+  visibleColumns: any;
+  openRow: number | null;
+  setOpenRow: any;
 };
 
 export const RenderRow: React.FC<Props> = ({
@@ -18,32 +22,34 @@ export const RenderRow: React.FC<Props> = ({
   prepareRow,
   rows,
   visibleColumns,
-  renderRowSubComponent,
   openRow,
   setOpenRow,
 }) => {
-  const [opRow, setOpRow] = useState();
   const row = rows[index];
   prepareRow(row);
 
   const { style: rowStyle, ...restRow } = row?.getRowProps({ style });
-  const top = 16 + ROW_HEIGHT * index;
-
-  const i = row?.index;
-  const isShiftRow = openRow < row.index;
+  const top = 14 + ROW_HEIGHT * index;
 
   if (row.isExpanded) {
-    setOpRow(i);
+    setOpenRow(row.index);
   }
 
-  const shiftRowsStyles = isShiftRow ? rowStyle.top + 200 : rowStyle.top;
+  const isShiftRow = openRow !== null && openRow < row.index;
+
+  const shiftRowsStyles = isShiftRow ? rowStyle.top + 1000 : rowStyle.top;
   const rowStyleOpen = { ...rowStyle, top: shiftRowsStyles };
+
   return (
     <>
       <div
         {...restRow}
         className="tr"
-        style={{ ...rowStyleOpen, width: "auto", background: theme.white }}
+        style={{
+          ...rowStyleOpen,
+          width: "auto",
+          background: row.isExpanded ? "#f9f9f9" : theme.white,
+        }}
       >
         {row.cells.map((cell: any, cellIndex: number) => {
           return (
@@ -58,18 +64,10 @@ export const RenderRow: React.FC<Props> = ({
       {row.isExpanded ? (
         <StyledTr top={top}>
           <td colSpan={visibleColumns.length}>
-            {renderRowSubComponent({ row })}
+            <Expander data={row.original} />
           </td>
         </StyledTr>
       ) : null}
     </>
   );
 };
-
-const StyledTr = styled.tr<{ top?: number }>`
-  z-index: 9999999;
-  background-color: red;
-  height: 200px;
-  position: relative;
-  top: ${({ top }) => top && `${top}px`};
-`;

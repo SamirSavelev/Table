@@ -1,26 +1,25 @@
-import { ReactNode } from "react";
 import { BsArrowDown, BsArrowUp } from "react-icons/bs";
-import { TableState } from "react-table";
 import styled, { css } from "styled-components";
+import Text from "../../Text";
 
 export const ROW_HEIGHT = 65;
 
-export const _bindScrollCallback = (
+export const _bindScrollCallback = ({
   element,
   callback,
-  callbackForScroll = () => {}
-) => {
+  callbackForScroll = () => {},
+}: ScrollCallback) => {
   if (element) {
     element.addEventListener("scroll", callbackForScroll, false);
     element.addEventListener("mousewheel", callback, false);
     element.addEventListener("DOMMouseScroll", callback, false);
   }
 };
-export const _unBindScrollCallback = (
+export const _unBindScrollCallback = ({
   element,
   callback,
-  callbackForScroll = () => {}
-) => {
+  callbackForScroll = () => {},
+}: ScrollCallback) => {
   if (element) {
     element.removeEventListener("scroll", callbackForScroll, false);
     element.removeEventListener("mousewheel", callback, false);
@@ -46,7 +45,7 @@ export const Styles = styled.div<{
       padding-top: 50px;
       .tr {
         &:hover {
-          background-color: ${({ theme }) => theme.bgColor} !important;
+          background-color: #f9f9f9 !important;
         }
       }
     }
@@ -78,7 +77,7 @@ export const Styles = styled.div<{
     .td {
       display: flex !important;
       align-items: center !important;
-      padding: 0 15px;
+      padding: 0 10px;
       overflow-y: hidden;
       &:hover {
         overflow-y: visible;
@@ -101,9 +100,6 @@ export const Styles = styled.div<{
         z-index: 1;
         touch-action: none;
       }
-    }
-    .td:last-child {
-      padding: ${({ chart }) => (chart ? 0 : "8px")} !important;
     }
     .header,
     .footer {
@@ -142,6 +138,15 @@ export const Styles = styled.div<{
       }
     }
   }
+`;
+
+export const StyledTr = styled.tr<{ top?: number }>`
+  z-index: 9999999;
+  background-color: #f9f9f9;
+  height: 1000px;
+  width: 100%;
+  position: relative;
+  top: ${({ top }) => top && `${top}px`};
 `;
 
 export const ValueGeneralCss = css`
@@ -193,6 +198,26 @@ export const AlignedLink = styled.div`
   max-width: 100%;
 `;
 
+const Container = styled.section`
+  width: 100%;
+  padding: 0;
+  background-color: ${({ theme }) => theme.white};
+  border-radius: 2px;
+  box-sizing: border-box;
+  max-width: 1100px;
+  padding: 0;
+`;
+
+const Header = styled(Text)`
+  font-weight: 600;
+  font-size: 18px;
+  margin-top: 15px;
+  margin-bottom: 17px;
+  color: ${({ theme }) => theme.grey2};
+`;
+
+export const TableStyles = { Container, Header };
+
 export const CellElement: React.FC<{ item: any }> = ({ item }) => (
   <>
     <span>
@@ -218,8 +243,8 @@ export const defaultColumn = () => ({
 // functions
 export const getItemSize = (h: number) => {
   const height = h * ROW_HEIGHT;
-  if (height > 400) {
-    return 400;
+  if (height > 1200) {
+    return 1200;
   } else {
     return height;
   }
@@ -230,40 +255,14 @@ export interface FooterRow {
 }
 
 export interface ITable {
-  isLoading?: boolean;
-  title?: string;
-  selectRows?: boolean;
-  error?: string | null;
-  setCheckedRows?: any;
-  subtitle?: string | ReactNode;
-  filename?: string;
-  extraContent?: JSX.Element;
-  buttonText?: string;
-  data: any;
-  chart?: boolean;
-  exportStyle?: any;
-  scrollEnd?: boolean;
-  height?: number;
-  footerData?: any[];
+  header: string;
   columns: any;
+  data: any;
   tableData: any;
-  tooltip?: string | ReactNode;
-  bottomContent?: ReactNode;
-  hideExcel?: boolean;
+}
 
-  type?: string;
-
-  initialState?: Partial<TableState<object>>;
-  buttonNew?: string;
-  onClickButtonNew?: any;
-  modal?: boolean;
-  noHorPadding?: boolean;
-  noPadding?: boolean;
-  grayHeader?: boolean;
-  onClickButton?: (serachValue: string) => void; // Пока не используется, нужно для фильтрации таблицы
-  onChangeSearch?: () => void;
-  noExport?: boolean;
-  promotion?: boolean;
-  plusMunisModal?: boolean;
-  noHeader?: boolean;
+interface ScrollCallback {
+  element: any;
+  callback: any;
+  callbackForScroll: any;
 }

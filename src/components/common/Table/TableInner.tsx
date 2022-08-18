@@ -21,7 +21,6 @@ export const TableInner: React.FC<Props> = ({
   children,
   getTableBodyProps,
   style,
-  grayHeader,
   ...rest
 }) => {
   const height = ROW_HEIGHT * (rows.length - 1);
@@ -29,7 +28,6 @@ export const TableInner: React.FC<Props> = ({
     <>
       <TableInnerHeader
         totalColumnsWidth={totalColumnsWidth}
-        grayHeader={grayHeader}
         headerGroups={headerGroups}
       />
       <div className="body">

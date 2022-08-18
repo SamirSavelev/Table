@@ -12,6 +12,7 @@ interface IText {
   tableHeader?: boolean;
   withTooltip?: boolean;
   clickable?: boolean;
+  description?: boolean;
 }
 
 const Text = styled.div<IText>`
@@ -41,6 +42,14 @@ const Text = styled.div<IText>`
     clickable &&
     css`
       cursor: pointer;
+    `};
+  ${({ description }) =>
+    description &&
+    css`
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 18px;
+      color: ${({ theme }) => theme.textBlack};
     `};
 `;
 

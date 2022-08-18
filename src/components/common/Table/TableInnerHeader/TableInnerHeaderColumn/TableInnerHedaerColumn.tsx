@@ -1,9 +1,4 @@
-import theme from "../../../../../../styles/light";
 import SortedIcon from "../../components/SortedIcon";
-
-const accentStyle = {
-  color: theme.purple,
-};
 
 type Props = {
   column: any;
@@ -20,9 +15,7 @@ export const TableInnerHeaderColumn: React.FC<Props> = ({ column, last }) => {
   return (
     <div {...column.getHeaderProps({ style: columnStyle })} className="th">
       <div {...column.getSortByToggleProps()}>
-        <div style={column.isSorted ? accentStyle : null}>
-          {column.render("Header")}
-        </div>
+        <div>{column.render("Header")}</div>
       </div>
       {!last && (
         <div
