@@ -1,10 +1,12 @@
 import React, { FC } from "react";
+import SideBar from "../src/components/common/Sidebar";
 import { LayoutProps } from "./Layout.props";
 import { Container, MainContainer } from "./styles";
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <MainContainer>
+      <SideBar />
       <Container>{children}</Container>
     </MainContainer>
   );

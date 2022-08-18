@@ -43,8 +43,8 @@ const GlobalStyle = createGlobalStyle`
 	}
 	
 	main {
-		padding: 25px;
 		height: 100%;
+		padding: 0;
 	}
 	
 	#__next {

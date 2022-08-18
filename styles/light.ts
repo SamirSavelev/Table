@@ -7,6 +7,7 @@ const theme: DefaultTheme = {
   white: "#FFFFFF",
   primary: "#57617B",
   grey: "#2A2E37",
+  grey2: "#3A3C40",
   greyHover: "#82868C",
   lightGrey: "#BABFC5",
   lightGrey2: "#CFCFCF",
@@ -25,6 +26,12 @@ const theme: DefaultTheme = {
   orange: "#F58C2B",
   yellow: "#F1F52B",
   purple: "#532BF5;",
+  bgInput: "#F3F3F5",
+  mainColor: "#5A5A5A",
+  greyLink: "#ACACAC",
+  tooltip: "#E0E0E0",
+  tooltipTitle: "#828282",
+  dropdownItem: "#2A2E37",
 };
 
 export default theme;
