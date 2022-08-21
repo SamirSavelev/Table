@@ -41,7 +41,6 @@ export const RenderRow: React.FC<Props> = ({
     : rowStyle.top;
   const rowStyleOpen = { ...rowStyle, top: shiftRowsStyles };
 
-  console.log(rows);
   return (
     <>
       <div {...row.getToggleRowExpandedProps()}>
