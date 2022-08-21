@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const MainContainer = styled.main`
   display: grid;
-  grid-template-columns: 270px auto;
+  grid-template-columns: 270px calc(100% - 270px);
+  grid-template-areas: "s c";
   gap: 10px;
 `;
 
@@ -14,4 +15,5 @@ export const Container = styled.div`
   display: flex;
   justify-content: flex-start;
   padding: 20px 50px 20px 20px;
+  grid-area: c;
 `;

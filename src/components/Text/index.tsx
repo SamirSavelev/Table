@@ -13,6 +13,8 @@ interface IText {
   withTooltip?: boolean;
   clickable?: boolean;
   description?: boolean;
+  centered?: boolean;
+  disabled?: boolean;
 }
 
 const Text = styled.div<IText>`
@@ -26,6 +28,8 @@ const Text = styled.div<IText>`
       ? theme.greyHover
       : props.withTooltip
       ? theme.tooltipTitle
+      : props.disabled
+      ? theme.textDarkGrey
       : theme.black};
   font-weight: ${({ ...props }) =>
     props.logo || props.extraBold ? "700" : props.bold ? "600" : "400"};
@@ -50,6 +54,11 @@ const Text = styled.div<IText>`
       font-size: 13px;
       line-height: 18px;
       color: ${({ theme }) => theme.textBlack};
+    `};
+  ${({ centered }) =>
+    centered &&
+    css`
+      text-align: center;
     `};
 `;
 

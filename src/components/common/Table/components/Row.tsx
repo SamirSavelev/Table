@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import { UseComponents } from "../../../../../styles/useComponents";
+import { CommonUseComponents } from "../../../../../styles/CommonUseComponents";
 import Text from "../../../Text";
 
-const { Row } = UseComponents;
+const { Row } = CommonUseComponents;
 
 const RowExpander = ({ title, children }) => {
   return (
     <Wrapper>
-      <Text>{title}</Text>
+      <Text disabled>{title}</Text>
       {children}
     </Wrapper>
   );

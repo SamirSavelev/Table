@@ -1,4 +1,4 @@
-import { IFlex } from "./../src/components/interfaces";
+import { IFlex } from "../src/components/interfaces";
 import styled from "styled-components";
 
 const Row = styled.div<IFlex>`
@@ -26,6 +26,7 @@ const Column = styled.div<IFlex>`
       : "center"};
   gap: ${({ gap }) => (gap ? gap : 0)};
   align-items: ${({ alignItems }) => (alignItems ? alignItems : "stretch")};
+  margin: ${({ margin }) => (margin ? margin : "0")};
 `;
 
 const Clickable = styled.button`
@@ -33,4 +34,4 @@ const Clickable = styled.button`
   padding: 0;
   width: max-content;
 `;
-export const UseComponents = { Row, Column, Clickable };
+export const CommonUseComponents = { Row, Column, Clickable };

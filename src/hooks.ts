@@ -1,10 +1,9 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-// import { RootState, AppDispatch } from "./store";
+import { RootState, AppDispatch } from "./store";
 import { useEffect } from "react";
-// import { Profile } from "./features/profile/profile-api-slice";
 
-// export const useAppDispatch = () => useDispatch<AppDispatch>();
-// export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export function useOutsideClick(ref: any, onClick: any) {
   useEffect(() => {

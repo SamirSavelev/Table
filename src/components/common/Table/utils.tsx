@@ -42,7 +42,7 @@ export const Styles = styled.div<{
     line-height: 12px;
     .body {
       position: relative;
-      padding-top: 50px;
+      padding-top: 65px;
       .tr {
         &:hover {
           background-color: #f9f9f9 !important;
@@ -141,7 +141,7 @@ export const Styles = styled.div<{
 `;
 
 export const StyledTr = styled.tr<{ top?: number }>`
-  z-index: 9999999;
+  z-index: 0;
   background-color: #f9f9f9;
   height: 1000px;
   width: 100%;
@@ -200,11 +200,11 @@ export const AlignedLink = styled.div`
 
 const Container = styled.section`
   width: 100%;
+  max-width: 1505px;
   padding: 0;
   background-color: ${({ theme }) => theme.white};
   border-radius: 2px;
   box-sizing: border-box;
-  max-width: 1100px;
   padding: 0;
 `;
 
@@ -216,10 +216,65 @@ const Header = styled(Text)`
   color: ${({ theme }) => theme.grey2};
 `;
 
-export const TableStyles = { Container, Header };
+const Pagination = styled.div<{ padding?: string; gap?: string }>`
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  padding: ${({ padding }) => (padding ? padding : "0")};
+  gap: ${({ gap }) => (gap ? gap : "0")};
+  background: ${({ theme }) => theme.white};
+  box-shadow: 0px 4px 10px rgba(221, 222, 222, 0.5);
+  border-radius: 38px;
+`;
+
+const PaginationButton = styled.button<{ isActive?: boolean }>`
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  padding: 0 15px;
+  align-items: center;
+  transition: 0.2s ease-out;
+  &:hover {
+    background: ${({ theme }) => theme.rowHover};
+  }
+  ${({ isActive }) =>
+    isActive &&
+    css`
+      background: ${({ theme }) => theme.lightGreyHover};
+    `}
+`;
+
+const StyledCircle = styled.button<{
+  right?: boolean;
+  left?: boolean;
+  isActive?: boolean;
+}>`
+  height: 32px;
+  width: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 32px;
+  background-color: ${({ theme, right, left, isActive }) =>
+    right || left || isActive ? theme.lightGreyHover : theme.white};
+  transition: 0.2s ease-out;
+  transform: ${({ right, left }) =>
+    right ? `rotate(-0.25turn)` : left ? `rotate(0.25turn)` : ""};
+  &:hover {
+    background-color: ${({ theme }) => theme.rowHover};
+  }
+`;
+export const TableStyles = {
+  Container,
+  Header,
+  Pagination,
+  PaginationButton,
+  StyledCircle,
+};
 
 export const CellElement: React.FC<{ item: any }> = ({ item }) => (
-  <>
+  <div {...row.getToggleRowExpandedProps()}>
     <span>
       {item?.value ||
         item?.average_position ||
@@ -232,7 +287,7 @@ export const CellElement: React.FC<{ item: any }> = ({ item }) => (
         <span>{item?.difference}</span>
       </ArrowSection>
     )}
-  </>
+  </div>
 );
 
 export const defaultColumn = () => ({
@@ -241,10 +296,11 @@ export const defaultColumn = () => ({
 });
 
 // functions
+
 export const getItemSize = (h: number) => {
-  const height = h * ROW_HEIGHT;
-  if (height > 1200) {
-    return 1200;
+  const height = h * (ROW_HEIGHT + 1) + 15;
+  if (h == 1) {
+    return 230;
   } else {
     return height;
   }

@@ -17,6 +17,10 @@ const Container = styled.button<IButton>`
   display: inline-flex;
   white-space: nowrap;
   border-radius: 8px;
+  &:hover {
+    background: #f5f5f5;
+    box-shadow: 0px 4px 10px rgba(221, 222, 222, 0.5);
+  }
   ${({ theme, big }) =>
     big &&
     css`
@@ -67,6 +71,15 @@ const Container = styled.button<IButton>`
     redBorder &&
     css`
       border: 1px solid #fb2c2c;
+      &:hover {
+        background: #ff5353;
+        color: ${({ theme }) => theme.white};
+      }
+    `}
+     ${({ shadow }) =>
+    shadow &&
+    css`
+      box-shadow: 0px 4px 10px rgba(221, 222, 222, 0.5);
     `}
 `;
 
