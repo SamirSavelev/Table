@@ -1,15 +1,14 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  position: relative;
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   top: 0;
-  left: 0;
-  bottom: 0;
   width: 270px;
+  height: 100%;
   padding: 40px 10px;
   background-color: ${({ theme }) => theme.white};
   box-shadow: 0px 5px 18px rgba(40, 41, 61, 0.07);
@@ -24,4 +23,5 @@ const ButtonContainer = styled.div`
 const Wave = styled.div`
   margin: 15px 0 15px 0;
 `;
+
 export const SidebarStyled = { Wrapper, ButtonContainer, Wave };

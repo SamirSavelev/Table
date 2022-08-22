@@ -1,13 +1,12 @@
+import { FC } from "react";
+import Image from "next/image";
+import { menuConfig } from "./config";
 import Button from "../../Button";
 import Logo from "../../Logo";
+import MenuItem from "../Menu/components/MenuItem";
 import { SidebarStyled } from "./styles";
 import plus from "../../../assets/plus.svg";
-import Image from "next/image";
-import MenuItem from "../Menu/components/MenuItem";
-
 import wave from "../../../assets/menu/wave.svg";
-import { menuConfig } from "./config";
-import { FC } from "react";
 
 const { part1, part2, part3 } = menuConfig;
 const { Wrapper, ButtonContainer, Wave } = SidebarStyled;
@@ -67,4 +66,5 @@ const SideBar: FC = () => {
     </Wrapper>
   );
 };
+
 export default SideBar;

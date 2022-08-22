@@ -32,6 +32,7 @@ const theme: DefaultTheme = {
   tooltip: "#E0E0E0",
   tooltipTitle: "#828282",
   dropdownItem: "#2A2E37",
+  rowHover: "#F2F2F2",
 };
 
 export default theme;

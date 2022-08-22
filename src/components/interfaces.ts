@@ -22,7 +22,8 @@ export interface IDropdown {
   header: string;
   tooltip: string;
   menuItems?: Array<string>;
-  calendar?: boolean;
+  filterForm: any;
+  setFilterForm: any;
 }
 
 export interface IFlex {

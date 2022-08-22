@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { UseComponents } from "../../../../styles/useComponents";
+import { CommonUseComponents } from "../../../../styles/CommonUseComponents";
 import WithToolTip from "../../HOCs/WithReactToolTip";
 import { IDropdown } from "../../interfaces";
 import Text from "../../Text";
@@ -24,7 +24,7 @@ const {
   FooterButton,
   cssStyle,
 } = DropdownStyles;
-const { Column } = UseComponents;
+const { Column } = CommonUseComponents;
 
 const Dropdown: FC<IDropdown> = ({
   menuItems,
@@ -32,17 +32,20 @@ const Dropdown: FC<IDropdown> = ({
   id,
   header,
   tooltip,
+  filterForm,
+  setFilterForm,
 }) => {
   const ref = useRef(null);
   const today = new Date();
   const [selectedDay, setSelectedDay] = useState<Date>(today);
-  const [selectItem, setSelectItem] = useState("Любой");
-  const [activeItem, setActiveItem] = useState("");
   const [isShow, setIsShow] = useState(false);
-
+  const isCalendar = id === "calendar";
+  const isStatus = id === "status";
+  const isPort = id === "port";
+  const isSelectedDay =
+    format(selectedDay, "dd-MM-yyyy") !== format(today, "dd-MM-yyyy");
   const open = () => {
     setIsShow(true);
-    setSelectItem("");
   };
   const close = () => {
     setIsShow(false);
@@ -51,31 +54,51 @@ const Dropdown: FC<IDropdown> = ({
   useOutsideClick(ref, close);
 
   const activeItemHandler = (item: string) => () => {
-    setActiveItem(item);
-    close();
+    if (isPort) {
+      setFilterForm({
+        ...filterForm,
+        port: item,
+      });
+    } else if (isStatus) {
+      setFilterForm({
+        ...filterForm,
+        status: item,
+      });
+    }
+    setIsShow(false);
   };
 
   useEffect(() => {
-    setActiveItem(format(selectedDay, "dd.MM.yyyy"));
+    if (isCalendar && isSelectedDay) {
+      setFilterForm({
+        ...filterForm,
+        date: format(selectedDay, "dd.MM.yyyy"),
+      });
+    }
   }, [selectedDay]);
 
   const activeCalendarDay = () => {
-    close();
+    setIsShow(false);
   };
 
   const cancel = () => {
-    close();
+    setSelectedDay(today);
+    setIsShow(false);
+    setFilterForm({
+      ...filterForm,
+      date: "",
+    });
   };
   const inputTitle =
-    isShow && id !== "calendar"
-      ? `Выберите ${big ? "порт" : "статус"} `
-      : activeItem
-      ? activeItem
-      : id === "calendar" &&
-        format(selectedDay, "dd-MM-yyyy") === format(today, "dd-MM-yyyy")
+    isShow && !isCalendar
+      ? `Выберите ${isStatus ? "статус" : "порт"} `
+      : isPort && filterForm.port
+      ? filterForm.port
+      : isStatus && filterForm.status
+      ? filterForm.status
+      : isCalendar && !filterForm.date
       ? "__.___.____"
-      : id === "calendar" &&
-        format(selectedDay, "dd-MM-yyyy") !== format(today, "dd-MM-yyyy")
+      : isCalendar && filterForm.date
       ? format(selectedDay, "dd.MM.yyyy")
       : "Любой";
 
@@ -105,23 +128,24 @@ const Dropdown: FC<IDropdown> = ({
           <Input id={id} value={inputTitle} disabled isShow={isShow} />
         </Column>
         <Column>
-          <Arrow rotate={isShow && id !== "calendar"}>
+          <Arrow rotate={isShow && !isCalendar}>
             <Image src={id == "calendar" ? calendar : down} alt="" />
           </Arrow>
         </Column>
       </Container>
-      {isShow && id !== "calendar" && (
+      {isShow && !isCalendar && (
         <Popup id={id}>
-          {menuItems.map((item: string, index: number) => {
-            return (
-              <DropdownItem onClick={activeItemHandler(item)} key={index}>
-                {item}
-              </DropdownItem>
-            );
-          })}
+          {menuItems &&
+            menuItems.map((item: string, index: number) => {
+              return (
+                <DropdownItem onClick={activeItemHandler(item)} key={index}>
+                  {item}
+                </DropdownItem>
+              );
+            })}
         </Popup>
       )}
-      {isShow && id === "calendar" && (
+      {isShow && isCalendar && (
         <Calendar>
           <style>{cssStyle}</style>
           <DayPicker

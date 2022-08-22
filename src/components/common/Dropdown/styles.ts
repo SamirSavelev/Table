@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { UseComponents } from "../../../../styles/useComponents";
+import { CommonUseComponents } from "../../../../styles/CommonUseComponents";
 import Button from "../../Button";
 
-const { Row } = UseComponents;
+const { Row } = CommonUseComponents;
 
 const Container = styled(Row)<{ id?: string }>`
   background: ${({ theme }) => theme.white};
@@ -15,7 +15,7 @@ const Container = styled(Row)<{ id?: string }>`
 `;
 
 const Arrow = styled.div<{ rotate?: boolean }>`
-  transition: 0.5s ease-out;
+  transition: 0.2s ease-out;
   ${({ rotate }) =>
     rotate &&
     css`

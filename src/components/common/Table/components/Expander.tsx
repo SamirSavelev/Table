@@ -1,16 +1,17 @@
 import { format } from "date-fns/fp";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import { UseComponents } from "../../../../../styles/useComponents";
+import { CommonUseComponents } from "../../../../../styles/CommonUseComponents";
 import Button from "../../../Button";
 import Text from "../../../Text";
 import RowExpander from "./Row";
 import but1 from "../../../../assets/but1.svg";
 import but2 from "../../../../assets/but2.svg";
 import fix from "../../../../assets/fix.svg";
+import files from "../../../../assets/files.svg";
 import Image from "next/image";
 
-const { Column } = UseComponents;
+const { Column } = CommonUseComponents;
 const Expander = ({ data }) => {
   const fileRef = useRef();
   const file = document.getElementById("file");
@@ -66,7 +67,7 @@ const Expander = ({ data }) => {
         <Section widht="1000px">
           <Column>
             <BigBlock>
-              <Text>Описание груза</Text>
+              <Text disabled>Описание груза</Text>
               <Text description>{data.description}</Text>
             </BigBlock>
           </Column>
@@ -90,7 +91,7 @@ const Expander = ({ data }) => {
         </Section>
       </Block>
       <BigBlock>
-        <Text>Файл транспортной накладной</Text>
+        <Text disabled>Файл транспортной накладной</Text>
         <DownloadBlock>
           <DownLoadTitle>
             <Text>Накладная_для_Умки (1).doc</Text>
@@ -114,7 +115,7 @@ const Expander = ({ data }) => {
         </DownloadBlock>
       </BigBlock>
       <BigBlock>
-        <Text>Файл приемного акта</Text>
+        <Text disabled>Файл приемного акта</Text>
         <Text description>
           <Button onClick={() => fileRef?.current?.click()}>
             <Image src={fix} alt="" /> &nbsp;&nbsp;Добавить
@@ -131,8 +132,11 @@ const Expander = ({ data }) => {
       </BigBlock>
       <RowExpander title="Номер приемного акта">{data.certificate}</RowExpander>
       <ButtonBlock>
-        <Button small>РЕДАКТИРОВАТЬ</Button>
-        <Button small redBorder>
+        <Button small shadow>
+          <Image src={files} alt="" />
+          &nbsp;&nbsp; РЕДАКТИРОВАТЬ
+        </Button>
+        <Button small shadow redBorder>
           РАЗДЕЛИТЬ ГРУЗ
         </Button>
       </ButtonBlock>

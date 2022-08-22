@@ -12,4 +12,5 @@ export interface IButton {
   noPadding?: boolean;
   small?: boolean;
   redBorder?: boolean;
+  shadow?: boolean;
 }

@@ -1,3 +1,4 @@
+import Text from "../../Text";
 import { TableInnerHeader } from "./TableInnerHeader/TableInnerHeader";
 import { ROW_HEIGHT } from "./utils";
 
@@ -33,6 +34,12 @@ export const TableInner: React.FC<Props> = ({
       <div className="body">
         <div {...getTableBodyProps()} {...rest} style={{ height }}>
           {children}
+          {!rows.length && (
+            <Text tableHeader medium centered>
+              К сожалению данные не найдены. Попробуйте задать другие параметры
+              поиска
+            </Text>
+          )}
         </div>
       </div>
     </>

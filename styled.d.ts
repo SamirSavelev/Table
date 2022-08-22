@@ -33,5 +33,6 @@ declare module "styled-components" {
     tooltip: string;
     tooltipTitle: string;
     dropdownItem: string;
+    rowHover: string;
   }
 }
