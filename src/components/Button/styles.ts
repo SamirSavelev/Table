@@ -64,6 +64,7 @@ const Container = styled.button<IButton>`
       background-color: transparent;
       color: ${({ theme }) => theme.greyLink};
       &:hover {
+        background-color: transparent;
         color: ${({ theme }) => theme.greyHover};
       }
     `}
