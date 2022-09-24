@@ -1,19 +1,15 @@
 import styled from "styled-components";
 
 export const MainContainer = styled.main`
-  display: grid;
-  grid-template-columns: 270px calc(100% - 270px);
-  grid-template-areas: "s c";
-  gap: 10px;
+  display: flex;
 `;
 
 export const Container = styled.div`
+  display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   margin: 0 auto;
+  padding: 40px;
   height: 100%;
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  padding: 20px 50px 20px 20px;
-  grid-area: c;
 `;

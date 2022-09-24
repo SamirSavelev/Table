@@ -19,7 +19,7 @@ class MyDocument extends Document {
       <Html lang="ru">
         <Head>
           <meta charSet="utf-8" />
-          <meta name="description" content="Toimi" />
+          <meta name="description" content="Тестовое задание" />
           <link rel="icon" href="/logo.ico" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />

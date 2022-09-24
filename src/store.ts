@@ -4,15 +4,18 @@ import {
   ThunkAction,
   Action,
 } from "@reduxjs/toolkit";
-
-import tableReducer from "./features/table/table-api-slice";
+import { tableApi } from "@features/table/table-api-slice";
+import modalSlice from "@features/modal/modal-slice";
 
 const reducers = combineReducers({
-  table: tableReducer,
+  [tableApi.reducerPath]: tableApi.reducer,
+  modal: modalSlice,
 });
 
 export const store = configureStore({
   reducer: reducers,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(tableApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

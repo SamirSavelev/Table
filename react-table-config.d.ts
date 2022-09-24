@@ -1,149 +1,129 @@
+import {
+  UseColumnOrderInstanceProps,
+  UseColumnOrderState,
+  UseExpandedHooks,
+  UseExpandedInstanceProps,
+  UseExpandedOptions,
+  UseExpandedRowProps,
+  UseExpandedState,
+  UseFiltersColumnOptions,
+  UseFiltersColumnProps,
+  UseFiltersInstanceProps,
+  UseFiltersOptions,
+  UseFiltersState,
+  UseGlobalFiltersColumnOptions,
+  UseGlobalFiltersInstanceProps,
+  UseGlobalFiltersOptions,
+  UseGlobalFiltersState,
+  UseGroupByCellProps,
+  UseGroupByColumnOptions,
+  UseGroupByColumnProps,
+  UseGroupByHooks,
+  UseGroupByInstanceProps,
+  UseGroupByOptions,
+  UseGroupByRowProps,
+  UseGroupByState,
+  UsePaginationInstanceProps,
+  UsePaginationOptions,
+  UsePaginationState,
+  UseResizeColumnsColumnOptions,
+  UseResizeColumnsColumnProps,
+  UseResizeColumnsOptions,
+  UseResizeColumnsState,
+  UseRowSelectHooks,
+  UseRowSelectInstanceProps,
+  UseRowSelectOptions,
+  UseRowSelectRowProps,
+  UseRowSelectState,
+  UseRowStateCellProps,
+  UseRowStateInstanceProps,
+  UseRowStateOptions,
+  UseRowStateRowProps,
+  UseRowStateState,
+  UseSortByColumnOptions,
+  UseSortByColumnProps,
+  UseSortByHooks,
+  UseSortByInstanceProps,
+  UseSortByOptions,
+  UseSortByState,
+} from "react-table";
+
 declare module "react-table" {
-  export type Cell = {
-    render: (type: string) => any;
-    getCellProps: () => any;
-    column: Column;
-    row: Row;
-    state: any;
-    value: any;
-  };
+  // take this file as-is, or comment out the sections that don't apply to your plugin configuration
 
-  export type Row = {
-    index: number;
-    cells: Cell[];
-    getRowProps: () => any;
-    originalRow: any;
-    getToggleRowExpandedProps: () => any;
-    isExpanded?: boolean;
-  };
-  export interface HeaderColumn {
-    accessor: string | ((originalRow: any) => string);
-    Header?: string | ((props: Api) => JSX.Element | string);
-    Filter?: string | ((props: Api) => JSX.Element | string);
-    Cell?: string | ((cell: Cell) => JSX.Element | string);
-    id?: string | number;
-    minWidth?: string | number;
-    maxWidth?: string | number;
-    width?: string | number;
-  }
+  export interface TableOptions<
+    D extends Record<string, unknown>
+  > extends UseExpandedOptions<D>,
+      UseFiltersOptions<D>,
+      UseGlobalFiltersOptions<D>,
+      UseGroupByOptions<D>,
+      UsePaginationOptions<D>,
+      UseResizeColumnsOptions<D>,
+      UseRowSelectOptions<D>,
+      UseRowStateOptions<D>,
+      UseSortByOptions<D>,
+      // note that having Record here allows you to add anything to the options, this matches the spirit of the
+      // underlying js library, but might be cleaner if it's replaced by a more specific type that matches your
+      // feature set, this is a safe default.
+      Record<string, any> {}
 
-  export interface Column extends HeaderColumn {
-    id: string | number;
-  }
+  export interface Hooks<
+    D extends Record<string, unknown> = Record<string, unknown>
+  > extends UseExpandedHooks<D>,
+      UseGroupByHooks<D>,
+      UseRowSelectHooks<D>,
+      UseSortByHooks<D> {}
 
-  export type Page = Row[];
+  export interface TableInstance<
+    D extends Record<string, unknown> = Record<string, unknown>
+  > extends UseColumnOrderInstanceProps<D>,
+      UseExpandedInstanceProps<D>,
+      UseFiltersInstanceProps<D>,
+      UseGlobalFiltersInstanceProps<D>,
+      UseGroupByInstanceProps<D>,
+      UsePaginationInstanceProps<D>,
+      UseRowSelectInstanceProps<D>,
+      UseRowStateInstanceProps<D>,
+      UseSortByInstanceProps<D> {}
 
-  export interface EnhancedColumn extends Column {
-    render: (type: string) => any;
-    getHeaderProps: () => any;
-    getSortByToggleProps: () => any;
-    sorted: boolean;
-    sortedDesc: boolean;
-    sortedIndex: number;
-  }
+  export interface TableState<
+    D extends Record<string, unknown> = Record<string, unknown>
+  > extends UseColumnOrderState<D>,
+      UseExpandedState<D>,
+      UseFiltersState<D>,
+      UseGlobalFiltersState<D>,
+      UseGroupByState<D>,
+      UsePaginationState<D>,
+      UseResizeColumnsState<D>,
+      UseRowSelectState<D>,
+      UseRowStateState<D>,
+      UseSortByState<D> {}
 
-  export type HeaderGroup = {
-    headers: EnhancedColumn[];
-    getRowProps: () => any;
-  };
+  export interface ColumnInterface<
+    D extends Record<string, unknown> = Record<string, unknown>
+  > extends UseFiltersColumnOptions<D>,
+      UseGlobalFiltersColumnOptions<D>,
+      UseGroupByColumnOptions<D>,
+      UseResizeColumnsColumnOptions<D>,
+      UseSortByColumnOptions<D> {}
 
-  export type Hooks = {
-    beforeRender: [];
-    columns: [];
-    headerGroups: [];
-    headers: [];
-    rows: Row[];
-    row: [];
-    renderableRows: [];
-    getTableProps: [];
-    getRowProps: [];
-    getHeaderRowProps: [];
-    getHeaderProps: [];
-    getCellProps: [];
-  };
+  export interface ColumnInstance<
+    D extends Record<string, unknown> = Record<string, unknown>
+  > extends UseFiltersColumnProps<D>,
+      UseGroupByColumnProps<D>,
+      UseResizeColumnsColumnProps<D>,
+      UseSortByColumnProps<D> {}
 
-  export interface Api
-    extends TableProps,
-      UseRowsValues,
-      UseFiltersValues,
-      UsePaginationValues,
-      UseColumnsValues {
-    hooks: Hooks;
-    rows: Row[];
-    columns: EnhancedColumn[];
-    getTableProps: () => any;
-    getRowProps: () => any;
-    prepareRow: (row: Row) => any;
-    getSelectRowToggleProps: () => any;
-    toggleSelectAll: (forcedState: boolean) => any;
-  }
+  export interface Cell<
+    D extends Record<string, unknown> = Record<string, unknown>,
+    V = any
+  > extends UseGroupByCellProps<D>,
+      UseRowStateCellProps<D> {}
 
-  export interface TableProps {
-    data: any[];
-    columns: HeaderColumn[];
-    state?: any;
-    debug?: boolean;
-  }
-
-  export interface RowsProps {
-    subRowsKey: string;
-  }
-
-  export interface FiltersProps {
-    filterFn: () => void;
-    manualFilters: boolean;
-    disableFilters: boolean;
-    setFilter: () => any;
-    setAllFilters: () => any;
-  }
-
-  export interface UsePaginationValues {
-    nextPage: () => any;
-    previousPage: () => any;
-    setPageSize: (size: number) => any;
-    gotoPage: (page: number) => any;
-    canPreviousPage: boolean;
-    canNextPage: boolean;
-    page: Page;
-    pageOptions: [];
-  }
-
-  export interface UseRowsValues {
-    rows: Row[];
-  }
-
-  export interface UseColumnsValues {
-    columns: EnhancedColumn[];
-    headerGroups: HeaderGroup[];
-    headers: EnhancedColumn[];
-  }
-
-  export interface UseFiltersValues {
-    setFilter: () => any;
-    setAllFilters: () => any;
-  }
-
-  export function useTable(props: TableProps, ...plugins: any[]): Api;
-
-  export function useColumns(props: TableProps): TableProps & UseColumnsValues;
-
-  export function useRows(props: TableProps): TableProps & UseRowsValues;
-
-  export function useFilters(props: TableProps): TableProps & {
-    rows: Row[];
-  };
-
-  export function useSortBy(props: TableProps): TableProps & {
-    rows: Row[];
-  };
-
-  export function usePagination(props: TableProps): UsePaginationValues;
-
-  export function useFlexLayout(props: TableProps): TableProps;
-
-  export function useExpanded(props: TableProps): TableProps & {
-    toggleExpandedByPath: () => any;
-    expandedDepth: [];
-    rows: [];
-  };
+  export interface Row<
+    D extends Record<string, unknown> = Record<string, unknown>
+  > extends UseExpandedRowProps<D>,
+      UseGroupByRowProps<D>,
+      UseRowSelectRowProps<D>,
+      UseRowStateRowProps<D> {}
 }

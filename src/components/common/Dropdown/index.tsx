@@ -1,166 +1,98 @@
-import { FC, useEffect, useRef, useState } from "react";
-import { CommonUseComponents } from "../../../../styles/CommonUseComponents";
-import WithToolTip from "../../HOCs/WithReactToolTip";
-import { IDropdown } from "../../interfaces";
-import Text from "../../Text";
-import { DropdownStyles } from "./styles";
-import down from "../../../assets/down.svg";
+import { FC, useRef, useState } from "react";
 import Image from "next/image";
-import DropdownItem from "./components/DropdownItem";
-import { useOutsideClick } from "../../../hooks";
-import calendar from "../../../assets/calendar.svg";
-import { format } from "date-fns";
-import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
-import ru from "date-fns/locale/ru";
+import { useOutsideClick } from "@hooks";
+import Text from "@components/Text";
+import WithToolTip from "@components/HOCs/WithReactToolTip";
+import DropdownItem from "./components/DropdownItem";
+import down from "@assets/down.svg";
+import { DropdownStyles } from "./styles";
+import { CommonUseComponents } from "@styles";
+import { IDropdown } from "@interfaces";
+import { useMemo } from "react";
+import { useEffect } from "react";
 
-const {
-  Container,
-  Arrow,
-  Popup,
-  Input,
-  Calendar,
-  Footer,
-  FooterButton,
-  cssStyle,
-} = DropdownStyles;
+const { Container, Arrow, Popup, Input } = DropdownStyles;
 const { Column } = CommonUseComponents;
 
 const Dropdown: FC<IDropdown> = ({
-  menuItems,
-  big = false,
+  fullWidth,
   id,
   header,
   tooltip,
-  filterForm,
-  setFilterForm,
+  data,
+  value,
+  setValue,
 }) => {
+  const isModalDrowDown = !!fullWidth;
   const ref = useRef(null);
-  const today = new Date();
-  const [selectedDay, setSelectedDay] = useState<Date>(today);
   const [isShow, setIsShow] = useState(false);
-  const isCalendar = id === "calendar";
-  const isStatus = id === "status";
-  const isPort = id === "port";
-  const isSelectedDay =
-    format(selectedDay, "dd-MM-yyyy") !== format(today, "dd-MM-yyyy");
-  const open = () => {
-    setIsShow(true);
+
+  const options = useMemo(() => {
+    const options = new Set();
+    data.forEach((item) => options.add(item?.[id]));
+    return [...options];
+  }, [id, data]);
+
+  const selectItemHandler = (valueNumber: number | string | null) => () => {
+    isModalDrowDown
+      ? setValue({
+          ...value,
+          userId: valueNumber,
+        })
+      : setValue(id, valueNumber);
+
+    close();
   };
+
+  const filterTitle = isShow
+    ? `Выберите ${id}`
+    : value?.length > 0
+    ? value[0].value
+    : "";
+
+  const modalTitle = value?.userId;
+
   const close = () => {
     setIsShow(false);
   };
 
   useOutsideClick(ref, close);
 
-  const activeItemHandler = (item: string) => () => {
-    if (isPort) {
-      setFilterForm({
-        ...filterForm,
-        port: item,
-      });
-    } else if (isStatus) {
-      setFilterForm({
-        ...filterForm,
-        status: item,
-      });
-    }
-    setIsShow(false);
-  };
+  const title = isModalDrowDown ? modalTitle : filterTitle;
 
-  useEffect(() => {
-    if (isCalendar && isSelectedDay) {
-      setFilterForm({
-        ...filterForm,
-        date: format(selectedDay, "dd.MM.yyyy"),
-      });
-    }
-  }, [selectedDay]);
-
-  const activeCalendarDay = () => {
-    setIsShow(false);
-  };
-
-  const cancel = () => {
-    setSelectedDay(today);
-    setIsShow(false);
-    setFilterForm({
-      ...filterForm,
-      date: "",
-    });
-  };
-  const inputTitle =
-    isShow && !isCalendar
-      ? `Выберите ${isStatus ? "статус" : "порт"} `
-      : isPort && filterForm.port
-      ? filterForm.port
-      : isStatus && filterForm.status
-      ? filterForm.status
-      : isCalendar && !filterForm.date
-      ? "__.___.____"
-      : isCalendar && filterForm.date
-      ? format(selectedDay, "dd.MM.yyyy")
-      : "Любой";
-
-  const footer = (
-    <Footer>
-      <FooterButton onClick={activeCalendarDay}>
-        <Text small bold>
-          Выбрать
-        </Text>
-      </FooterButton>
-      <FooterButton noBg onClick={cancel}>
-        <Text small bold>
-          Отмена
-        </Text>
-      </FooterButton>
-    </Footer>
-  );
   return (
     <Column spaceBetween ref={ref}>
-      <Container id={id} spaceBetween onClick={open}>
+      <Container
+        spaceBetween
+        onClick={() => setIsShow((state) => !state)}
+        isModalDrowDown={isModalDrowDown}
+      >
         <Column spaceBetween>
           <WithToolTip toolTip={tooltip} id={id}>
             <Text small withTooltip>
               {header}
             </Text>
           </WithToolTip>
-          <Input id={id} value={inputTitle} disabled isShow={isShow} />
+          <Input id={id} value={title} disabled isShow={isShow} />
         </Column>
         <Column>
-          <Arrow rotate={isShow && !isCalendar}>
-            <Image src={id == "calendar" ? calendar : down} alt="" />
+          <Arrow rotate={isShow}>
+            <Image src={down} alt="open/close" />
           </Arrow>
         </Column>
       </Container>
-      {isShow && !isCalendar && (
-        <Popup id={id}>
-          {menuItems &&
-            menuItems.map((item: string, index: number) => {
+      {isShow && (
+        <Popup id={id} isModalDrowDown={isModalDrowDown}>
+          {options.length > 0 &&
+            options.map((item: string, index: number) => {
               return (
-                <DropdownItem onClick={activeItemHandler(item)} key={index}>
+                <DropdownItem onClick={selectItemHandler(item)} key={index}>
                   {item}
                 </DropdownItem>
               );
             })}
         </Popup>
-      )}
-      {isShow && isCalendar && (
-        <Calendar>
-          <style>{cssStyle}</style>
-          <DayPicker
-            mode="single"
-            required
-            selected={selectedDay}
-            locale={ru}
-            modifiersClassNames={{
-              selected: "my-selected",
-              today: "my-today",
-            }}
-            onSelect={setSelectedDay}
-            footer={footer}
-          />
-        </Calendar>
       )}
     </Column>
   );

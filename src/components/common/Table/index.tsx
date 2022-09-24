@@ -1,6 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
-
-import { useRouter } from "next/router";
+import React, { useRef } from "react";
 
 import {
   useTable,
@@ -11,10 +9,13 @@ import {
   useExpanded,
   useFilters,
   usePagination,
+  useGlobalFilter,
+  Hooks,
 } from "react-table";
+
 import { FixedSizeList } from "react-window";
+
 import {
-  defaultColumn,
   getItemSize,
   ITable,
   Styles,
@@ -22,101 +23,56 @@ import {
   _bindScrollCallback,
   _unBindScrollCallback,
 } from "./utils";
-import { useTheme } from "styled-components";
+
 import { useSticky } from "react-table-sticky";
 
 import { RenderRow } from "./RenderRow";
 import { TableInner } from "./TableInner";
 import { CommonUseComponents } from "../../../../styles/CommonUseComponents";
 import IndeterminateCheckbox from "../../Checkbox";
-
+import Pagination from "./components/Pagination";
+import InputSearch from "../../../components/InputSearch";
 import Dropdown from "../Dropdown";
-import { ports, statuses } from "../Dropdown/config";
-import { useAppSelector } from "../../../hooks";
-import { selectOpenedRows } from "../../../features/table/table-api-slice";
-import { useGlobalFilter, useAsyncDebounce } from "react-table";
-import matchSorter from "match-sorter";
-import Button from "../../Button";
-import Text from "../../Text";
-import Image from "next/image";
-import down from "../../../assets/down.svg";
-const { Container, Header, Pagination, PaginationButton, StyledCircle } =
-  TableStyles;
-const { Row, Column } = CommonUseComponents;
+import Button from "@components/Button";
+import { useAppDispatch } from "@hooks";
+import { showModal } from "@features/modal/modal-slice";
+import ModalContent from "@components/Modal/Content";
+import { useState } from "react";
+import { useEffect } from "react";
 
-export const TableContext = React.createContext({});
+const { Container, Header } = TableStyles;
+const { Row } = CommonUseComponents;
 
-const Table: React.FC<ITable> = ({ header, columns, data, tableData }) => {
-  const router = useRouter();
-  const theme = useTheme();
-  const ROW_HEIGHT = 66;
-  const [filteredData, setFilteredData] = useState(tableData);
-  const [filterForm, setFilterForm] = useState({
-    port: "",
-    status: "",
-    date: "",
-  });
-  const filterData = () => {
-    const { port, status, date } = filterForm;
-    const filtedData = data?.data
-      .filter((column) => {
-        if (port) {
-          return column.port == port;
-        } else {
-          return true;
-        }
-      })
-      .filter((column) => {
-        if (status) {
-          return column.status == status;
-        } else {
-          return true;
-        }
-      })
-      .filter((column) => {
-        if (date) {
-          return column.receipt_date == date;
-        } else {
-          return true;
-        }
-      });
-    setFilteredData(filtedData);
-  };
+const Table: React.FC<ITable> = ({ header, columns, data }) => {
+  const [queries, setQueries] = useState(data);
 
-  const reset = () => {
-    setFilterForm({
-      port: "",
-      status: "",
-      date: "",
-    });
-    setFilteredData(tableData);
-  };
+  useEffect(() => {
+    data && setQueries(data);
+  }, [data]);
 
   const {
     getTableProps,
-    selectedFlatRows,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
     totalColumnsWidth,
-    visibleColumns,
     page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
     gotoPage,
     nextPage,
     previousPage,
     setPageSize,
-    state: { pageIndex, pageSize },
+    setFilter,
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    state: { pageIndex, pageSize, globalFilter, filters },
   } = useTable(
     {
       columns,
-      data: filteredData,
+      data: queries,
       initialState: { pageIndex: 0 },
     },
+    useFilters,
+    useGlobalFilter,
     useSortBy,
     useBlockLayout,
     useResizeColumns,
@@ -124,66 +80,64 @@ const Table: React.FC<ITable> = ({ header, columns, data, tableData }) => {
     useExpanded,
     usePagination,
     useRowSelect,
-
-    (hooks) => {
-      hooks.allColumns.push((columns) => [
+    (hooks: Hooks) => {
+      hooks.allColumns.push((columns: any) => [
         {
           id: "selection",
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </div>
+          Header: ({ getToggleAllRowsSelectedProps }: any) => (
+            <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
           ),
           minWidth: 28,
           width: 28,
-          Cell: ({ row }) => (
-            <div>
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
+          Cell: ({ row }: any) => (
+            <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
           ),
         },
         ...columns,
       ]);
     }
   );
+  const dispatch = useAppDispatch();
 
   const containerRef = useRef(null);
-  const openedRows = useAppSelector((state) => selectOpenedRows(state));
+
+  const dizableFilter = () => {
+    setFilter("userId", undefined);
+    setGlobalFilter(undefined);
+  };
+
+  const content = <ModalContent add data={queries} setData={setQueries} />;
+
+  const addPost = () => {
+    dispatch(
+      showModal({
+        content,
+      })
+    );
+  };
 
   return (
     <>
-      <Header>{header}</Header>
-      <Row gap="10px" flexStart alignItems="flex-start" margin="0 0 20px 0">
-        <Dropdown
-          filterForm={filterForm}
-          setFilterForm={setFilterForm}
-          id="port"
-          menuItems={ports}
-          big
-          header="Порт назначения"
-          tooltip="Выберите порт назначения"
+      <Row gap="50px" flexStart alignItems="center" margin="0 0 20px 0">
+        <Header>{header}</Header>
+        <InputSearch
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
         />
         <Dropdown
-          filterForm={filterForm}
-          setFilterForm={setFilterForm}
-          id="status"
-          menuItems={statuses}
-          big
-          header="Статус"
-          tooltip="Выберите статус"
+          id="userId"
+          data={data}
+          header="Фильтр"
+          tooltip="Фильтрация данных по userId"
+          value={filters}
+          setValue={setFilter}
         />
-        <Dropdown
-          filterForm={filterForm}
-          setFilterForm={setFilterForm}
-          id="calendar"
-          header="Дата поступления в порт"
-          tooltip="Дата поступления в порт"
-        />
-        <Button big onClick={reset}>
+        <Button big onClick={dizableFilter}>
           Сбросить
         </Button>
-        <Button big confirm onClick={filterData}>
-          Применить
+        <Button big onClick={addPost}>
+          Добавить
         </Button>
       </Row>
       <Container>
@@ -195,11 +149,9 @@ const Table: React.FC<ITable> = ({ header, columns, data, tableData }) => {
                 style={{ position: "relative", flex: 1, zIndex: 0 }}
               >
                 <FixedSizeList
-                  height={
-                    getItemSize(page.length + 1) + openedRows.length * 1000
-                  }
+                  height={getItemSize(page.length + 1)}
                   itemCount={page.length}
-                  itemSize={ROW_HEIGHT}
+                  itemSize={67}
                   width="100%"
                   innerElementType={({ children, style, ...rest }: any) => {
                     return (
@@ -218,12 +170,10 @@ const Table: React.FC<ITable> = ({ header, columns, data, tableData }) => {
                 >
                   {({ index, style }) => (
                     <RenderRow
-                      data={filteredData}
                       index={index}
                       style={style}
                       prepareRow={prepareRow}
                       rows={page}
-                      visibleColumns={visibleColumns}
                     />
                   )}
                 </FixedSizeList>
@@ -232,52 +182,14 @@ const Table: React.FC<ITable> = ({ header, columns, data, tableData }) => {
           </Styles>
         }
       </Container>
-      <Row spaceBetween margin="40px 0 40px 0">
-        <Pagination padding="0 25px">
-          <Column margin="0 10px 0 0">
-            <Text>Показывать по:</Text>
-          </Column>
-
-          <PaginationButton
-            isActive={pageSize == 10}
-            onClick={() => setPageSize(10)}
-          >
-            10
-          </PaginationButton>
-          <PaginationButton
-            isActive={pageSize == 20}
-            onClick={() => setPageSize(20)}
-          >
-            20
-          </PaginationButton>
-          <PaginationButton
-            isActive={pageSize == 50}
-            onClick={() => setPageSize(50)}
-          >
-            50
-          </PaginationButton>
-        </Pagination>
-        <Pagination padding="9px 10px" gap="10px">
-          <StyledCircle left onClick={() => previousPage()}>
-            <Image src={down} alt="" />
-          </StyledCircle>
-          <StyledCircle isActive={pageIndex == 0} onClick={() => gotoPage(0)}>
-            1
-          </StyledCircle>
-          <StyledCircle isActive={pageIndex == 1} onClick={() => gotoPage(1)}>
-            2
-          </StyledCircle>
-          <StyledCircle isActive={pageIndex == 2} onClick={() => gotoPage(2)}>
-            3
-          </StyledCircle>
-          <StyledCircle isActive={pageIndex == 3} onClick={() => gotoPage(3)}>
-            4
-          </StyledCircle>
-          <StyledCircle right onClick={() => nextPage()}>
-            <Image src={down} alt="" />
-          </StyledCircle>
-        </Pagination>
-      </Row>
+      <Pagination
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+        previousPage={previousPage}
+        gotoPage={gotoPage}
+        pageIndex={pageIndex}
+        nextPage={nextPage}
+      />
     </>
   );
 };

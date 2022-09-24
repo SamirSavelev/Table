@@ -1,8 +1,7 @@
-import { BsArrowDown, BsArrowUp } from "react-icons/bs";
 import styled, { css } from "styled-components";
 import Text from "../../Text";
 
-export const ROW_HEIGHT = 65;
+export const ROW_HEIGHT = 66;
 
 export const _bindScrollCallback = ({
   element,
@@ -15,6 +14,7 @@ export const _bindScrollCallback = ({
     element.addEventListener("DOMMouseScroll", callback, false);
   }
 };
+
 export const _unBindScrollCallback = ({
   element,
   callback,
@@ -27,7 +27,6 @@ export const _unBindScrollCallback = ({
   }
 };
 
-// styles
 export const Styles = styled.div<{
   selectedRows?: boolean;
 }>`
@@ -165,8 +164,8 @@ export const ValueGeneralCss = css`
     vertical-align: center;
   }
 `;
+
 export const TableHeader = styled.div<{ noHorPadding?: boolean }>`
-  margin-bottom: 20px;
   display: flex;
   align-items: center;
   padding: ${({ noHorPadding }) => (noHorPadding ? "0 30px" : 0)};
@@ -273,32 +272,8 @@ export const TableStyles = {
   StyledCircle,
 };
 
-export const CellElement: React.FC<{ item: any }> = ({ item }) => (
-  <div {...row.getToggleRowExpandedProps()}>
-    <span>
-      {item?.value ||
-        item?.average_position ||
-        item?.request_visibility ||
-        "ー"}
-    </span>
-    {typeof item?.increased !== "boolean" ? null : (
-      <ArrowSection positive={item.increased}>
-        {item?.increased ? <BsArrowUp /> : <BsArrowDown />}
-        <span>{item?.difference}</span>
-      </ArrowSection>
-    )}
-  </div>
-);
-
-export const defaultColumn = () => ({
-  minWidth: 50,
-  width: 150,
-});
-
-// functions
-
 export const getItemSize = (h: number) => {
-  const height = h * (ROW_HEIGHT + 1) + 15;
+  const height = h * (ROW_HEIGHT + 1);
   if (h == 1) {
     return 230;
   } else {
@@ -306,15 +281,10 @@ export const getItemSize = (h: number) => {
   }
 };
 
-export interface FooterRow {
-  [propName: string]: string;
-}
-
 export interface ITable {
   header: string;
   columns: any;
   data: any;
-  tableData: any;
 }
 
 interface ScrollCallback {

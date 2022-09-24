@@ -1,34 +1,43 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
-interface ModalState {
-  OpenedRows: Array<string>;
-}
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { IPost } from "@interfaces";
 
-// Define the initial state using that type
-const initialState: ModalState = {
-  OpenedRows: [],
-};
-
-const slice = createSlice({
-  name: "table",
-  initialState,
-  reducers: {
-    OpenRow: (state, action) => {
-      if (!state.OpenedRows.includes(action.payload)) {
-        state.OpenedRows.push(action.payload);
-      }
-    },
-    CloseRow: (state, action) => {
-      const index = state.OpenedRows.indexOf(action.payload);
-      if (state.OpenedRows.includes(action.payload)) {
-        state.OpenedRows.splice(index, 1);
-      }
-    },
-  },
+export const tableApi = createApi({
+  reducerPath: "tableApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.NEXT_PUBLIC_API_URL,
+  }),
+  endpoints: (builder) => ({
+    getPosts: builder.query<IPost[], void>({
+      query() {
+        return "/posts";
+      },
+    }),
+    createPost: builder.mutation<IPost, IPost>({
+      query: (body) => ({
+        url: "/posts/",
+        method: "POST",
+        body,
+      }),
+    }),
+    editPost: builder.mutation<IPost[], IPost>({
+      query: (body) => ({
+        url: "/posts/",
+        method: "PUT",
+        body,
+      }),
+    }),
+    deletePost: builder.mutation<IPost[], number>({
+      query: (id) => ({
+        url: `/posts/${id}`,
+        method: "DELETE",
+      }),
+    }),
+  }),
 });
 
-export const { OpenRow, CloseRow } = slice.actions;
-
-export const selectOpenedRows = (state: RootState) => state.table.OpenedRows;
-
-export default slice.reducer;
+export const {
+  useGetPostsQuery,
+  useCreatePostMutation,
+  useEditPostMutation,
+  useDeletePostMutation,
+} = tableApi;

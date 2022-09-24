@@ -1,15 +1,13 @@
 import React, { FC } from "react";
 import { Provider } from "react-redux";
-import SideBar from "../src/components/common/Sidebar";
-import { store } from "../src/store";
-import { LayoutProps } from "./Layout.props";
+import { store } from "@src/store";
+import { ILayout } from "@interfaces";
 import { Container, MainContainer } from "./styles";
 
-export const Layout: React.FC<LayoutProps> = ({ children }) => {
+export const Layout: FC<ILayout> = ({ children }) => {
   return (
     <MainContainer>
       <Provider store={store}>
-        <SideBar />
         <Container>{children}</Container>
       </Provider>
     </MainContainer>

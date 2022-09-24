@@ -1,5 +1,5 @@
+import { IButton } from "@components/interfaces";
 import { ButtonStyles } from "./styles";
-import { IButton } from "./interfaces";
 
 const { Container } = ButtonStyles;
 

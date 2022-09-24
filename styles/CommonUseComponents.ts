@@ -1,5 +1,5 @@
-import { IFlex } from "../src/components/interfaces";
 import styled from "styled-components";
+import { IFlex } from "@interfaces";
 
 const Row = styled.div<IFlex>`
   display: flex;
@@ -13,6 +13,7 @@ const Row = styled.div<IFlex>`
   gap: ${({ gap }) => (gap ? gap : 0)};
   align-items: ${({ alignItems }) => (alignItems ? alignItems : "stretch")};
   margin: ${({ margin }) => (margin ? margin : "0")};
+  padding: ${({ padding }) => (padding ? padding : "0")};
 `;
 
 const Column = styled.div<IFlex>`
@@ -34,4 +35,5 @@ const Clickable = styled.button`
   padding: 0;
   width: max-content;
 `;
+
 export const CommonUseComponents = { Row, Column, Clickable };

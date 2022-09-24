@@ -10,7 +10,6 @@ type Props = {
   children: any;
   style: any;
   getTableBodyProps: any;
-
   grayHeader?: boolean;
 };
 
@@ -25,6 +24,7 @@ export const TableInner: React.FC<Props> = ({
   ...rest
 }) => {
   const height = ROW_HEIGHT * (rows.length - 1);
+
   return (
     <>
       <TableInnerHeader

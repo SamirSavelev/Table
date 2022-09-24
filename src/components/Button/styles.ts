@@ -1,11 +1,11 @@
-import { IButton } from "./interfaces";
 import styled, { css } from "styled-components";
+import { IButton } from "@components/interfaces";
 
 const Container = styled.button<IButton>`
   width: ${({ stretch }) => (stretch ? "100%" : "max-content")};
   padding: ${({ ...props }) =>
     props.big
-      ? "24px 22px"
+      ? "22px"
       : props.noPadding
       ? ""
       : props.small
@@ -44,6 +44,7 @@ const Container = styled.button<IButton>`
   ${({ add }) =>
     add &&
     css`
+      color: ${({ theme }) => theme.white};
       border-radius: 4px;
       background-color: ${({ theme }) => theme.grey};
       &:hover {

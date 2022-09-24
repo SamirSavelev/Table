@@ -2,7 +2,6 @@ import Image from "next/image";
 import { FC, useEffect } from "react";
 import styled, { css } from "styled-components";
 import down from "../../../../assets/down.svg";
-import { CloseRow, OpenRow } from "../../../../features/table/table-api-slice";
 import { useAppDispatch } from "../../../../hooks";
 
 interface IIcon {
@@ -10,14 +9,6 @@ interface IIcon {
   index: number;
 }
 const ExpandIcon: FC<IIcon> = ({ isExpanded, index }) => {
-  useEffect(() => {
-    if (isExpanded) {
-      dispatch(OpenRow(index));
-    } else {
-      dispatch(CloseRow(index));
-    }
-  }, [isExpanded]);
-
   const dispatch = useAppDispatch();
   return (
     <StyledCircle rotate={isExpanded}>

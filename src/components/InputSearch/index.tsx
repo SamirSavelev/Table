@@ -1,18 +1,36 @@
+import { FC } from "react";
 import Image from "next/image";
+import search from "@assets/search.svg";
+import { IGlobalFilter } from "@interfaces";
 import { InputSearchStyles } from "./styles";
-import search from "../../assets/search.svg";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const { Input, InputContainer } = InputSearchStyles;
-const InputSearch = () => {
-  const submitContainer = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value, "e");
+
+const InputSearch: FC<IGlobalFilter> = ({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}) => {
+  const count = preGlobalFilteredRows.length;
+  const [value, setValue] = useState(globalFilter);
+  const inputFilterHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setGlobalFilter(e.target.value);
+    setValue(e.target.value);
   };
+
+  useEffect(() => {
+    !globalFilter && setValue("");
+  }, [globalFilter]);
+
   return (
     <InputContainer>
       <Image src={search} alt="search" />
       <Input
-        placeholder="Найти коносамент, груз, заказ и др."
-        onChange={submitContainer}
+        value={value}
+        placeholder={`${count} records...`}
+        onChange={inputFilterHandler}
       />
     </InputContainer>
   );
