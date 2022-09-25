@@ -12,6 +12,8 @@ const theme: DefaultTheme = {
   lightGrey: "#BABFC5",
   lightGrey2: "#CFCFCF",
   lightGrey3: "#EEEEEE",
+  lightGrey4: "#f9f9f9",
+  borderColor: "#e9e9e9",
   graphit: "#303030",
   textBlack: "#141414",
   textDarkGrey: "#7C7C7C",

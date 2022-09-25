@@ -1,19 +1,9 @@
-import Text from "../../Text";
-import { TableInnerHeader } from "./TableInnerHeader/TableInnerHeader";
+import { ITableInner } from "@interfaces";
 import { ROW_HEIGHT } from "./utils";
+import { TableInnerHeader } from "./TableInnerHeader/TableInnerHeader";
+import Text from "@components/Text";
 
-type Props = {
-  totalColumnsWidth: any;
-  headerGroups: any;
-  footerGroups: any;
-  rows: any;
-  children: any;
-  style: any;
-  getTableBodyProps: any;
-  grayHeader?: boolean;
-};
-
-export const TableInner: React.FC<Props> = ({
+export const TableInner: React.FC<ITableInner> = ({
   totalColumnsWidth,
   headerGroups,
   footerGroups,

@@ -1,10 +1,9 @@
+import { ITableInnerHeaderGroup } from "@interfaces";
 import { TableInnerHeaderColumn } from "../TableInnerHeaderColumn/TableInnerHedaerColumn";
 
-type Props = {
-  headerGroup: any;
-};
-
-export const TableInnerHeaderGroup: React.FC<Props> = ({ headerGroup }) => {
+export const TableInnerHeaderGroup: React.FC<ITableInnerHeaderGroup> = ({
+  headerGroup,
+}) => {
   return (
     <div
       {...headerGroup.getHeaderGroupProps({ style: { display: "flex" } })}

@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
-import { CommonUseComponents } from "../../../../styles/CommonUseComponents";
-import Button from "../../Button";
+import { CommonUseComponents } from "@styles";
 
 const { Row } = CommonUseComponents;
 
@@ -23,7 +22,7 @@ const Arrow = styled.div<{ rotate?: boolean }>`
     `}
 `;
 
-const Popup = styled.div<{ id?: string; isModalDrowDown?: boolean }>`
+const Popup = styled.div<{ isModalDrowDown?: boolean }>`
   position: absolute;
   top: ${({ isModalDrowDown }) => (isModalDrowDown ? "130px" : "102px")};
   width: ${({ isModalDrowDown }) => (isModalDrowDown ? "400px" : "250px")};
@@ -35,7 +34,7 @@ const Popup = styled.div<{ id?: string; isModalDrowDown?: boolean }>`
   z-index: 9;
 `;
 
-const Input = styled.input<{ isShow?: boolean; id?: string }>`
+const Input = styled.input<{ isShow?: boolean }>`
   cursor: pointer;
   width: 180px;
   background-color: ${({ theme }) => theme.white};

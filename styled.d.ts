@@ -13,6 +13,8 @@ declare module "styled-components" {
     lightGrey: string;
     lightGrey2: string;
     lightGrey3: string;
+    lightGrey4: string;
+    borderColor: string;
     graphit: string;
     textBlack: string;
     textDarkGrey: string;

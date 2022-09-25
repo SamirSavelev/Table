@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { IButton } from "@components/interfaces";
+import { IButton } from "@interfaces";
 
 const Container = styled.button<IButton>`
   width: ${({ stretch }) => (stretch ? "100%" : "max-content")};

@@ -1,11 +1,11 @@
 import { FC } from "react";
 import Image from "next/image";
 import { PaginationConfig } from "./config";
-import Text from "../../../../Text";
+import { IPagination } from "@interfaces";
+import { CommonUseComponents } from "@styles";
+import Text from "@components/Text";
 import { PaginationStyles } from "./styles";
-import { CommonUseComponents } from "../../../../../../styles/CommonUseComponents";
-import down from "../../../../../assets/down.svg";
-import { IPagination } from "../../../../../interfaces";
+import down from "@assets/down.svg";
 
 const { Row, Column } = CommonUseComponents;
 const { Container, Button, CircleButton } = PaginationStyles;

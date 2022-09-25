@@ -1,5 +1,4 @@
-import React, { useRef } from "react";
-
+import React, { useRef, useEffect, useState } from "react";
 import {
   useTable,
   useSortBy,
@@ -10,37 +9,31 @@ import {
   useFilters,
   usePagination,
   useGlobalFilter,
-  Hooks,
 } from "react-table";
 
 import { FixedSizeList } from "react-window";
+import { useSticky } from "react-table-sticky";
+import { showModal } from "@features/modal/modal-slice";
 
 import {
   getItemSize,
-  ITable,
-  Styles,
-  TableStyles,
   _bindScrollCallback,
   _unBindScrollCallback,
 } from "./utils";
 
-import { useSticky } from "react-table-sticky";
-
-import { RenderRow } from "./RenderRow";
-import { TableInner } from "./TableInner";
-import { CommonUseComponents } from "../../../../styles/CommonUseComponents";
-import IndeterminateCheckbox from "../../Checkbox";
-import Pagination from "./components/Pagination";
-import InputSearch from "../../../components/InputSearch";
-import Dropdown from "../Dropdown";
-import Button from "@components/Button";
-import { useAppDispatch } from "@hooks";
-import { showModal } from "@features/modal/modal-slice";
+import InputSearch from "@components/InputSearch";
 import ModalContent from "@components/Modal/Content";
-import { useState } from "react";
-import { useEffect } from "react";
+import Button from "@components/Button";
+import Pagination from "./components/Pagination";
+import { TableInner } from "./TableInner";
+import { RenderRow } from "./RenderRow";
+import Dropdown from "../Dropdown";
+import { useAppDispatch } from "@hooks";
+import { CommonUseComponents } from "@styles";
+import { TableStyles } from "./styles";
+import { ITable } from "@interfaces";
 
-const { Container, Header } = TableStyles;
+const { Styles, Container, Header } = TableStyles;
 const { Row } = CommonUseComponents;
 
 const Table: React.FC<ITable> = ({ header, columns, data }) => {

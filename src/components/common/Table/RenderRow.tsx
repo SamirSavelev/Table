@@ -1,9 +1,8 @@
-import ModalContent from "@components/Modal/Content";
-import { showModal } from "@features/modal/modal-slice";
-import { useAppDispatch } from "@hooks";
-import { IRenderRow } from "@interfaces";
-import { useEffect } from "react";
 import { Cell } from "react-table";
+import { useAppDispatch } from "@hooks";
+import { showModal } from "@features/modal/modal-slice";
+import ModalContent from "@components/Modal/Content";
+import { IRenderRow } from "@interfaces";
 import theme from "styles/light";
 
 export const RenderRow: React.FC<IRenderRow> = ({

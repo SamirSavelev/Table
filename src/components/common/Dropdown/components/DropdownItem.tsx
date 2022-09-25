@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { IDropdownItem } from "../../../interfaces";
-import Text from "../../../Text";
+import Text from "@components/Text";
 import { DropdownItemStyles } from "./styles";
+import { IDropdownItem } from "@interfaces";
 
 const { Container } = DropdownItemStyles;
+
 const DropdownItem: FC<IDropdownItem> = ({ children, onClick }) => {
   return (
     <Container onClick={onClick}>

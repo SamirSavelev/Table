@@ -1,9 +1,5 @@
+import { ITableInnerHeaderColumn } from "@interfaces";
 import SortedIcon from "../../components/SortedIcon";
-
-type Props = {
-  column: any;
-  last: boolean;
-};
 
 const columnStyle = {
   overflow: "hidden",
@@ -11,7 +7,10 @@ const columnStyle = {
   alignItems: "center",
 };
 
-export const TableInnerHeaderColumn: React.FC<Props> = ({ column, last }) => {
+export const TableInnerHeaderColumn: React.FC<ITableInnerHeaderColumn> = ({
+  column,
+  last,
+}) => {
   return (
     <div {...column.getHeaderProps({ style: columnStyle })} className="th">
       <div {...column.getSortByToggleProps()}>

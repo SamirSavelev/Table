@@ -1,4 +1,4 @@
-import theme from "../../../../../styles/light";
+import theme from "styles/light";
 import { TableInnerHeaderGroup } from "./TableInnerHeaderGroup/TableInnerHeaderGroup";
 
 type Props = {

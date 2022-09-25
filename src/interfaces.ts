@@ -1,7 +1,7 @@
 import { Dispatch, ReactNode } from "react";
 import { Row } from "react-table";
 import { CSSProperties } from "styled-components";
-
+import { StaticImageData } from "next/image";
 export interface IPost {
   userId: number;
   id?: number;
@@ -104,4 +104,62 @@ export interface IModalState {
 export interface ISpinner {
   size?: number;
   color?: string;
+}
+
+export interface IMenuItem {
+  children: ReactNode;
+  img: StaticImageData;
+  onClick: any;
+}
+
+export interface ITableInnerHeaderGroup {
+  headerGroup: any;
+}
+
+export interface ITableInnerHeaderColumn {
+  column: any;
+  last: boolean;
+}
+export interface IDropdownItem {
+  children: ReactNode;
+  onClick: any;
+}
+
+export interface IButton {
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  type?: string;
+  children?: ReactNode;
+  add?: boolean;
+  back?: boolean;
+  stretch?: boolean;
+  big?: boolean;
+  confirm?: boolean;
+  border?: boolean;
+  noPadding?: boolean;
+  small?: boolean;
+  redBorder?: boolean;
+  shadow?: boolean;
+}
+
+export interface ITableInner {
+  totalColumnsWidth: any;
+  headerGroups: any;
+  footerGroups: any;
+  rows: any;
+  children: any;
+  style: any;
+  getTableBodyProps: any;
+  grayHeader?: boolean;
+}
+
+export interface ITable {
+  header: string;
+  columns: any;
+  data: any;
+}
+
+export interface IScrollCallback {
+  element: any;
+  callback: any;
+  callbackForScroll: any;
 }

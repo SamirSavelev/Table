@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
-import { CommonUseComponents } from "../../../../../../styles/CommonUseComponents";
+import { CommonUseComponents } from "@styles";
+
 const { Row } = CommonUseComponents;
 
 const Container = styled(Row)<{ padding?: string; gap?: string }>`
