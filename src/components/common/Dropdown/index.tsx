@@ -46,7 +46,7 @@ const Dropdown: FC<IDropdown> = ({
   };
 
   const filterTitle = isShow
-    ? `Выберите ${id}`
+    ? `Выберите пользователя`
     : value?.length > 0
     ? value[0].value
     : "";

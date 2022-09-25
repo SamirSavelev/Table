@@ -1,4 +1,5 @@
 import { Dispatch, ReactNode } from "react";
+import { Row } from "react-table";
 import { CSSProperties } from "styled-components";
 
 export interface IPost {
@@ -28,7 +29,7 @@ export interface IPagination {
 export interface IRenderRow {
   index: number;
   style: CSSProperties;
-  prepareRow: (row: any) => void;
+  prepareRow: (row: Row) => void;
   rows: Array<any>;
   data?: any;
   setData?: Dispatch<any>;
@@ -90,8 +91,17 @@ export interface IDropdown {
 }
 
 export interface IModalContent {
-  add?: boolean;
   edit?: IPost;
   data: Array<IPost>;
   setData: Dispatch<Array<IPost>>;
+}
+
+export interface IModalState {
+  isOpen: boolean;
+  content: ReactNode | null;
+}
+
+export interface ISpinner {
+  size?: number;
+  color?: string;
 }

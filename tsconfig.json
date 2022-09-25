@@ -24,7 +24,8 @@
       "@styles": ["styles"],
       "@interfaces": ["src/interfaces.ts"],
       "@hooks": ["src/hooks.ts"],
-      "@src/*": ["src/*"]
+      "@src/*": ["src/*"],
+      "@ui/*": ["src/ui-kit/*"]
     }
   },
   "typeRoots": ["./node_modules/@types", "./@types"],

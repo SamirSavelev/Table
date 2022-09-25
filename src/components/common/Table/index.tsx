@@ -113,7 +113,7 @@ const Table: React.FC<ITable> = ({ header, columns, data }) => {
           id="userId"
           data={data}
           header="Фильтр"
-          tooltip="Фильтрация данных по userId"
+          tooltip="Фильтрация данных по пользователям"
           value={filters}
           setValue={setFilter}
         />

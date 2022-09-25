@@ -1,17 +1,10 @@
-import { RootState } from "../../store";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-interface ModalState {
-  isOpen: boolean;
-  content: any;
-  scrollable?: boolean;
-  onCancel?: () => void;
-  noPadding?: boolean;
-}
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "@src/store";
+import { IModalState } from "@interfaces";
 
-// Define the initial state using that type
-const initialState: ModalState = {
+const initialState: IModalState = {
   isOpen: false,
-  content: "",
+  content: null,
 };
 
 const modal = createSlice({
@@ -19,13 +12,13 @@ const modal = createSlice({
   initialState,
   reducers: {
     showModal: (state, action) => {
-      state.isOpen = true;
       const { content } = action.payload;
+      state.isOpen = true;
       state.content = content;
     },
     hideModal: (state) => {
       state.isOpen = false;
-      state.content = "";
+      state.content = null;
     },
   },
 });

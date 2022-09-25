@@ -1,8 +1,8 @@
 import Image from "next/image";
 import styled from "styled-components";
-import noSort from "../../../../assets/table/noSort.svg";
-import sortDown from "../../../../assets/table/sortDown.svg";
-import sortUp from "../../../../assets/table/sortUp.svg";
+import noSort from "@assets/table/noSort.svg";
+import sortDown from "@assets/table/sortDown.svg";
+import sortUp from "@assets/table/sortUp.svg";
 
 const SortedIcon: React.FC<{
   isSorted: boolean;
@@ -11,7 +11,6 @@ const SortedIcon: React.FC<{
   return (
     <IconWrapper>
       {!isSorted && <Image src={noSort} alt="" />}
-
       {isSorted &&
         (isSortedDesc ? (
           <Image src={sortDown} alt="" />
@@ -23,9 +22,10 @@ const SortedIcon: React.FC<{
 };
 
 const IconWrapper = styled.span`
-  margin-top: 5px;
+  margin-top: 10px;
   margin-left: 10px;
-  height: 15px;
-  width: 15px;
+  height: 20px;
+  width: 20px;
 `;
+
 export default SortedIcon;

@@ -54,16 +54,6 @@ export const Styles = styled.div<{
       font-weight: 600;
       overflow: hidden;
       white-space: nowrap;
-
-      span {
-        display: inline-block;
-        position: relative;
-        top: 4px;
-        align-items: center;
-        height: 20px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
     }
     .tr {
       min-width: 100%;

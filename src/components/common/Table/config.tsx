@@ -1,13 +1,20 @@
 import { Cell } from "react-table";
-import Text from "../../Text";
 import { FiX } from "react-icons/fi";
+import Text from "@components/Text";
 
-export const columns = (data: Array<any>, setData: any, deletePost: any) => {
+export const columns = (
+  data: Array<any>,
+  setData: any,
+  deletePost: any,
+  refetch: any
+) => {
   const deleteRow = async (e: any, cell: Cell) => {
     e.stopPropagation();
     await deletePost(cell?.row?.original?.id)
       .unwrap()
       .then(() => {
+        refetch();
+        // Так как данные моковые, рефетч не работает, поэтому удаление вручную
         const item = cell?.row?.original;
         const array = [...data];
         const index = array.indexOf(item);
@@ -19,35 +26,39 @@ export const columns = (data: Array<any>, setData: any, deletePost: any) => {
 
   return [
     {
-      accessor: "userId",
-      minWidth: 100,
-      width: 100,
-      Header: (
-        <Text tableHeader clickable>
-          userId
-        </Text>
-      ),
-      Cell: ({ cell }: { cell: Cell }) => <Text>{cell.value}</Text>,
-      Filter: "number",
-    },
-    {
       accessor: "id",
-      minWidth: 75,
-      width: 75,
+      minWidth: 50,
+      width: 50,
       Header: (
         <Text tableHeader clickable>
           id
         </Text>
       ),
-      Cell: ({ cell }: { cell: Cell }) => <Text>{cell.value}</Text>,
+      Cell: ({ cell }: { cell: Cell }) => (
+        <Text margin="auto auto">{cell.value}</Text>
+      ),
     },
+    {
+      accessor: "userId",
+      minWidth: 150,
+      width: 150,
+      Header: (
+        <Text tableHeader clickable>
+          Пользователь
+        </Text>
+      ),
+      Cell: ({ cell }: { cell: Cell }) => (
+        <Text margin="auto auto">{cell.value}</Text>
+      ),
+    },
+
     {
       accessor: "title",
       minWidth: 300,
       width: 300,
       Header: (
         <Text tableHeader clickable>
-          title
+          Заголовок
         </Text>
       ),
       Cell: ({ cell }: { cell: Cell }) => <Text>{cell.value}</Text>,
@@ -55,12 +66,12 @@ export const columns = (data: Array<any>, setData: any, deletePost: any) => {
     {
       Header: (
         <Text tableHeader clickable>
-          body
+          Сообщение
         </Text>
       ),
       accessor: "body",
-      minWidth: 800,
-      width: 800,
+      minWidth: 795,
+      width: 795,
       Cell: ({ cell }: { cell: Cell }) => <Text>{cell.value}</Text>,
     },
     {

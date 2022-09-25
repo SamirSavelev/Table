@@ -8,7 +8,7 @@ const Container = styled(Row)<{ isModalDrowDown?: boolean }>`
   background: ${({ theme }) => theme.white};
   border: 1px solid ${({ theme }) => theme.lightGrey3};
   border-radius: 8px;
-  width: ${({ isModalDrowDown }) => (isModalDrowDown ? "400px" : "220px")};
+  width: ${({ isModalDrowDown }) => (isModalDrowDown ? "400px" : "250px")};
   height: 62px;
   padding: 9px 13px;
   cursor: pointer;
@@ -26,7 +26,7 @@ const Arrow = styled.div<{ rotate?: boolean }>`
 const Popup = styled.div<{ id?: string; isModalDrowDown?: boolean }>`
   position: absolute;
   top: ${({ isModalDrowDown }) => (isModalDrowDown ? "130px" : "102px")};
-  width: ${({ isModalDrowDown }) => (isModalDrowDown ? "400px" : "220px")};
+  width: ${({ isModalDrowDown }) => (isModalDrowDown ? "400px" : "250px")};
   height: 221px;
   background-color: ${({ theme }) => theme.white};
   box-shadow: 0px 5px 18px rgba(40, 41, 61, 0.07);
@@ -37,7 +37,7 @@ const Popup = styled.div<{ id?: string; isModalDrowDown?: boolean }>`
 
 const Input = styled.input<{ isShow?: boolean; id?: string }>`
   cursor: pointer;
-  width: 150px;
+  width: 180px;
   background-color: ${({ theme }) => theme.white};
   font-size: 14px;
   color: ${({ theme }) => theme.grey2};

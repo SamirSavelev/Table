@@ -29,7 +29,7 @@ const InputSearch: FC<IGlobalFilter> = ({
       <Image src={search} alt="search" />
       <Input
         value={value}
-        placeholder={`${count} records...`}
+        placeholder={`${count} сообщений...`}
         onChange={inputFilterHandler}
       />
     </InputContainer>
