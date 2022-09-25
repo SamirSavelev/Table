@@ -19,9 +19,9 @@ export const tableApi = createApi({
         body,
       }),
     }),
-    editPost: builder.mutation<IPost[], IPost>({
+    editPost: builder.mutation<IPost, IPost>({
       query: (body) => ({
-        url: "/posts/",
+        url: `/posts/${body?.id}`,
         method: "PUT",
         body,
       }),

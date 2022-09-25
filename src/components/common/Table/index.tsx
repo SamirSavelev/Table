@@ -106,8 +106,7 @@ const Table: React.FC<ITable> = ({ header, columns, data }) => {
     setGlobalFilter(undefined);
   };
 
-  const content = <ModalContent add data={queries} setData={setQueries} />;
-
+  const content = <ModalContent data={queries} setData={setQueries} />;
   const addPost = () => {
     dispatch(
       showModal({
@@ -174,6 +173,8 @@ const Table: React.FC<ITable> = ({ header, columns, data }) => {
                       style={style}
                       prepareRow={prepareRow}
                       rows={page}
+                      data={queries}
+                      setData={setQueries}
                     />
                   )}
                 </FixedSizeList>

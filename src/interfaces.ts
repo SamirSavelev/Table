@@ -30,6 +30,8 @@ export interface IRenderRow {
   style: CSSProperties;
   prepareRow: (row: any) => void;
   rows: Array<any>;
+  data?: any;
+  setData?: any;
 }
 
 export interface IGlobalFilter {
@@ -87,7 +89,7 @@ export interface IDropdown {
 
 export interface IModalContent {
   add?: boolean;
-  edit?: boolean;
+  edit?: IPost;
   data: Array<IPost>;
   setData: Dispatch<Array<IPost>>;
 }

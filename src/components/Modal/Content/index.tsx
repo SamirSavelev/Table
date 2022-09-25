@@ -1,6 +1,9 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, useEffect } from "react";
 import { hideModal } from "@features/modal/modal-slice";
-import { useCreatePostMutation } from "@features/table/table-api-slice";
+import {
+  useCreatePostMutation,
+  useEditPostMutation,
+} from "@features/table/table-api-slice";
 import { useAppDispatch } from "@hooks";
 import Button from "@components/Button";
 import Dropdown from "@components/common/Dropdown";
@@ -12,17 +15,42 @@ import { IModalContent, IPost } from "@interfaces";
 const { Input, InputContainer } = InputSearchStyles;
 const { Column } = CommonUseComponents;
 
-const ModalContent: FC<IModalContent> = ({ add, edit, data, setData }) => {
+const ModalContent: FC<IModalContent> = ({ edit = null, data, setData }) => {
+  const isEdit = !!edit;
+
   const dispatch = useAppDispatch();
 
-  const [addPost, { isError, isUninitialized, isLoading, isSuccess, error }] =
-    useCreatePostMutation();
+  const [
+    addPost,
+    {
+      isError: addIsError,
+      isUninitialized: addIsUninitialized,
+      isLoading: addIsLoading,
+      isSuccess: addIsSuccess,
+      error: addErrorData,
+    },
+  ] = useCreatePostMutation();
+
+  const [
+    editPost,
+    {
+      isError: editIsError,
+      isUninitialized: editIsUninitialized,
+      isLoading: editIsLoading,
+      isSuccess: editIsSuccess,
+      error: editErrorData,
+    },
+  ] = useEditPostMutation();
 
   const [form, setForm] = useState({
     userId: 1,
     title: "",
     body: "",
   });
+
+  useEffect(() => {
+    isEdit && setForm(edit);
+  }, [isEdit]);
 
   const addTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((state) => ({ ...state, title: e.target.value }));
@@ -33,12 +61,14 @@ const ModalContent: FC<IModalContent> = ({ add, edit, data, setData }) => {
   };
 
   const onClickAddPost = async () => {
-    const fetch = add ? addPost : edit ? addPost : addPost;
+    const fetch = isEdit ? editPost : addPost;
     await fetch(form)
       .unwrap()
-      .then((payload) => {
+      .then((payload: IPost) => {
         const arrayData: Array<IPost> = [...data];
-        arrayData.push(payload);
+        isEdit
+          ? arrayData.splice(edit?.id - 1, 1, payload)
+          : arrayData.push(payload);
         setData(arrayData);
         dispatch(hideModal());
       })
@@ -55,7 +85,7 @@ const ModalContent: FC<IModalContent> = ({ add, edit, data, setData }) => {
     onClickAddPost();
   };
 
-  const title = `${add ? "Добавить" : edit ? "Редактировать" : "Удалить"} пост`;
+  const title = `${isEdit ? "Редактировать" : "Добавить"} пост`;
 
   return (
     <Column gap="30px" alignItems="center">

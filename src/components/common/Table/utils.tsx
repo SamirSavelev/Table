@@ -54,6 +54,7 @@ export const Styles = styled.div<{
       font-weight: 600;
       overflow: hidden;
       white-space: nowrap;
+
       span {
         display: inline-block;
         position: relative;
@@ -78,6 +79,7 @@ export const Styles = styled.div<{
       align-items: center !important;
       padding: 0 10px;
       overflow-y: hidden;
+
       &:hover {
         overflow-y: visible;
       }
