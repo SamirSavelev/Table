@@ -31,7 +31,9 @@ export interface IRenderRow {
   prepareRow: (row: any) => void;
   rows: Array<any>;
   data?: any;
-  setData?: any;
+  setData?: Dispatch<any>;
+  selectedRows?: Array<string>;
+  setSelectedRows?: Dispatch<Array<string>>;
 }
 
 export interface IGlobalFilter {

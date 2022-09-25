@@ -79,24 +79,9 @@ const Table: React.FC<ITable> = ({ header, columns, data }) => {
     useSticky,
     useExpanded,
     usePagination,
-    useRowSelect,
-    (hooks: Hooks) => {
-      hooks.allColumns.push((columns: any) => [
-        {
-          id: "selection",
-          Header: ({ getToggleAllRowsSelectedProps }: any) => (
-            <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-          ),
-          minWidth: 28,
-          width: 28,
-          Cell: ({ row }: any) => (
-            <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-          ),
-        },
-        ...columns,
-      ]);
-    }
+    useRowSelect
   );
+
   const dispatch = useAppDispatch();
 
   const containerRef = useRef(null);

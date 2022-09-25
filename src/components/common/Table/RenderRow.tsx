@@ -2,6 +2,8 @@ import ModalContent from "@components/Modal/Content";
 import { showModal } from "@features/modal/modal-slice";
 import { useAppDispatch } from "@hooks";
 import { IRenderRow } from "@interfaces";
+import { useEffect } from "react";
+import { Cell } from "react-table";
 import theme from "styles/light";
 
 export const RenderRow: React.FC<IRenderRow> = ({
@@ -24,7 +26,7 @@ export const RenderRow: React.FC<IRenderRow> = ({
     <ModalContent edit={row?.original} data={data} setData={setData} />
   );
 
-  const editPost = (cell) => {
+  const editPost = (cell: Cell) => {
     if (!cell?.value) return;
     dispatch(
       showModal({
@@ -33,7 +35,6 @@ export const RenderRow: React.FC<IRenderRow> = ({
     );
   };
 
-  console.log("row", row?.isSelected);
   return (
     <>
       <div {...row.getToggleRowExpandedProps()}>
